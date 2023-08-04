@@ -5,14 +5,12 @@ export const metadata: Metadata = {
   title: "Create New Course",
   description: "Create new course and partner with us",
 };
-import { ClerkProvider, useUser, SignIn, SignedOut } from "@clerk/nextjs";
 const NewCourse = () => {
   const [courseName, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [banner, setBanner] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const { isLoaded, isSignedIn, user } = useUser();
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
@@ -20,7 +18,7 @@ const NewCourse = () => {
   return (
     <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl mx-auto">
       <h1 className="font-mono text-2xl md:text-3xl text-center">
-        Create New Course {user?.firstName}
+        Create New Course
       </h1>
       <form
         className="flex flex-col gap-4 w-[500px] mt-10"

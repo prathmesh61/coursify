@@ -3,7 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Figtree } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 const inter = Inter({ subsets: ["latin"], weight: "800" });
 const figtree = Figtree({ subsets: ["latin"] });
 
@@ -11,21 +10,18 @@ export const metadata: Metadata = {
   title: "Coursify",
   description: "Launch a new career",
 };
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={figtree.className}>
-          <Header />
+    <html lang="en">
+      <body className={figtree.className}>
+        <Header />
 
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+        {children}
+      </body>
+    </html>
   );
 }

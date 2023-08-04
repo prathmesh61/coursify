@@ -1,24 +1,20 @@
-"use client";
-import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import rightA from "@/public/right-arrow.svg";
-import { UserButton, useUser } from "@clerk/nextjs";
 
-import axios from "axios";
 const Header = () => {
-  const { user } = useUser();
-  useEffect(() => {
-    const CreateUser = async () => {
-      const res = await axios.post("/api/create-user", {
-        username: user?.firstName,
-        email: user?.emailAddresses[0].emailAddress,
-      });
-      const data = res.data;
-      // console.log(data);
-    };
-    CreateUser();
-  }, []);
+  // const { user } = useUser();
+  // useEffect(() => {
+  //   const CreateUser = async () => {
+  //     const res = await axios.post("/api/create-user", {
+  //       username: user?.firstName,
+  //       email: user?.emailAddresses[0].emailAddress,
+  //     });
+  //     const data = res.data;
+  //     console.log(data);
+  //   };
+  //   CreateUser();
+  // }, []);
 
   return (
     <div className="flex justify-between items-center px-14 py-4 max-w-screen-2xl mx-auto ">
@@ -47,7 +43,6 @@ const Header = () => {
             className=" bg-black rounded-full"
           />
         </Link>
-        <UserButton afterSignOutUrl="/" />
       </div>
     </div>
   );

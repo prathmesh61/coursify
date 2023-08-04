@@ -22,7 +22,7 @@ const CourseSchema = new mongoose.Schema(
       type: Number,
       requried: [true, "Price is required"],
     },
-    userId: {
+    userID: {
       type: String,
       ref: "User",
     },
