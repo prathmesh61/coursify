@@ -1,18 +1,57 @@
 "use client";
-import { Metadata } from "next";
+import { useGetLoginUser } from "@/hooks/useGetLoginUser";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 import React, { FormEvent, useState } from "react";
-export const metadata: Metadata = {
-  title: "Create New Course",
-  description: "Create new course and partner with us",
-};
+import { toast } from "react-toastify";
 const NewCourse = () => {
   const [courseName, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [banner, setBanner] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const router = useRouter();
+  const { loginUser } = useGetLoginUser();
+  // console.log(loginUser?._id);
+
+  const CLOUDINARY_URL =
+    "https://api.cloudinary.com/v1_1/dpvjdarqx/image/upload";
+  const CLOUDINARY_UPLOAD_PRESET = "coursify";
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // setBanner(banner); //error
+
+    const file = banner;
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+    const { data } = await axios.post(CLOUDINARY_URL, formData);
+
+    try {
+      const course = await axios.post("/api/course", {
+        courseName,
+        description,
+        banner: data?.url || "",
+        category,
+        price,
+        id: loginUser?._id,
+      });
+      if (course.status === 200) {
+        toast.success("Course Created Successfully", {
+          position: "bottom-right",
+        });
+        setCourseName("");
+        setDescription("");
+        setBanner("");
+        setCategory("");
+        setPrice("");
+        router.push("/courses");
+      }
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   return (
@@ -58,9 +97,9 @@ const NewCourse = () => {
           <input
             type="file"
             name="banner"
+            accept="image/*"
             className="w-full outline-none border-2 border-gray-400 rounded-lg p-2"
-            value={banner}
-            onChange={(e) => setBanner(e.target.files![0])}
+            onChange={(e) => setBanner(e.target.files[0])}
             required
           />
         </div>

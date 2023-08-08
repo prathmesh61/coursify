@@ -1,20 +1,13 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import rightA from "@/public/right-arrow.svg";
+import axios from "axios";
+import { useGetLoginUser } from "@/hooks/useGetLoginUser";
+import Logout from "./Logout";
 
 const Header = () => {
-  // const { user } = useUser();
-  // useEffect(() => {
-  //   const CreateUser = async () => {
-  //     const res = await axios.post("/api/create-user", {
-  //       username: user?.firstName,
-  //       email: user?.emailAddresses[0].emailAddress,
-  //     });
-  //     const data = res.data;
-  //     console.log(data);
-  //   };
-  //   CreateUser();
-  // }, []);
+  const { loginUser } = useGetLoginUser();
 
   return (
     <div className="flex justify-between items-center px-14 py-4 max-w-screen-2xl mx-auto ">
@@ -27,7 +20,10 @@ const Header = () => {
         <Link href="/new-course" className="font-semibold text-md">
           Create Course
         </Link>
-        <Link href="/profile/3" className="font-semibold text-md">
+        <Link
+          href={`/profile/${loginUser?._id}`}
+          className="font-semibold text-md"
+        >
           Profile
         </Link>
         <Link
@@ -43,6 +39,7 @@ const Header = () => {
             className=" bg-black rounded-full"
           />
         </Link>
+        {loginUser && <Logout />}
       </div>
     </div>
   );

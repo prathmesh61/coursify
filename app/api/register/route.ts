@@ -7,23 +7,22 @@ ConnectionDB();
 export const POST = async (request: NextRequest) => {
   const reqBody = await request.json();
   const { username, email, password } = reqBody;
+  console.log(username, email);
 
   // console.log(reqBody);
-  const hashPassword = bcrypt.hashSync(password, 10);
   try {
+    const hashPassword = await bcrypt.hashSync(password, 10);
+
     const newUser = new User({
       username,
       email,
       password: hashPassword,
     });
+    await newUser.save();
 
-    const savedUser = await newUser.save();
-
+    const { password: _, ...rest } = newUser._doc;
     //send verification email
-    const { password: _, ...rest } = savedUser._doc;
     return NextResponse.json({
-      message: "User created successfully",
-      success: true,
       ...rest,
     });
   } catch (error: any) {

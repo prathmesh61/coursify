@@ -23,8 +23,6 @@ export const POST = async (request: NextRequest) => {
     // console.log(rest);
 
     return NextResponse.json({
-      message: "User created successfully",
-      success: true,
       ...rest,
     });
   } catch (error: any) {

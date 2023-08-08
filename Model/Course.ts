@@ -22,8 +22,8 @@ const CourseSchema = new mongoose.Schema(
       type: Number,
       requried: [true, "Price is required"],
     },
-    userID: {
-      type: String,
+    autherID: {
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
   },

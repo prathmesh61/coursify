@@ -3,6 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,7 +64,7 @@ const LoginPage = () => {
           type="submit"
           className="w-full py-1 px-4 text-center text-md font-semibold bg-blue-500 rounded-lg text-white"
         >
-          Register
+          Login
         </button>
         <Link href="/register" className="text-gray-500 underline text-sm my-2">
           if you don't have an account yet, click here to register

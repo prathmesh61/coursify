@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <div className="max-w-screen-2xl mx-auto px-14 flex justify-between items-center flex-wrap h-screen relative">
       <div className="flex flex-col gap-5">
-        <h1 className="text-7xl font-bold">
+        <h1 className="text-6xl font-extrabold">
           Launch a new career in as
           <br /> little as 6 months
         </h1>
@@ -17,7 +17,7 @@ const Hero = () => {
         </p>
         <Link
           href="/courses"
-          className="text-white bg-blue-500 px-5 py-1 cursor-pointer rounded-md text-xl text-center w-fit"
+          className="text-white bg-blue-500 px-5 py-1 cursor-pointer rounded-md text-lg text-center w-fit"
         >
           Browes our courses
         </Link>

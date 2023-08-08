@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
+import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 const RegitserPage = () => {
   const [username, setUserName] = useState("");
@@ -12,17 +13,29 @@ const RegitserPage = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const res = await axios.post("/api/regitser", {
+      const res = await axios.post("/api/register", {
         username: username,
         email: email,
         password: password,
       });
       const data = res.data;
-      router.push("/login");
+      localStorage.setItem("user", JSON.stringify(data));
+
+      router.push("/");
+      toast.success("Register Successfully", { position: "bottom-right" });
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
+  const { data, mutate, isLoading } = useMutation(handleFormSubmit, {
+    onSuccess(data, variables, context) {
+      localStorage.setItem("user", JSON.stringify(data));
+
+      router.push("/");
+    },
+  });
+  // console.log(data);
 
   return (
     <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl mx-auto h-screen">
