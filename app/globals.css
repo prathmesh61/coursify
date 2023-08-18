@@ -12,8 +12,22 @@ body,
 html {
   width: 100%;
   height: 100%;
+  font-family: "Product Sans";
 }
 .element {
   clip-path: polygon(0 0, 100% 0, 84% 100%, 0% 100%);
   background-color: rgb(41, 41, 230);
+}
+.learMoreGran {
+  background: linear-gradient(
+    123.77deg,
+    #8a2be2 -6.46%,
+    rgb(75, 102, 202) 59.04%,
+    #f8f8ff 124.53%
+  );
+  width: 400px;
+  height: 400px;
+}
+.headerBg {
+  background-color: #000814;
 }

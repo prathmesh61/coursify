@@ -1,23 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import heroCoursify from "@/public/heroCoursify.jpg";
+import heroCoursify from "@/public/HeroBgCoursify.gif";
 import heroBg from "@/public/hero-bg.png";
+import blurBg from "@/images/blurImg.svg";
 const Hero = () => {
   return (
-    <div className="max-w-screen-2xl mx-auto px-14 flex justify-between items-center flex-wrap h-screen relative">
-      <div className="flex flex-col gap-5">
-        <h1 className="text-6xl font-extrabold">
+    <div className=" relative max-w-screen-2xl mx-auto mt-28 lg:mt-40 px-14 flex justify-center lg:justify-between items-center flex-wrap  ">
+      <div className="flex flex-col justify-center mb-10 items-center lg:items-start  gap-7 text-center lg:text-left">
+        <h1 className="sm:text-6xl text-5xl font-extrabold text-center lg:text-left">
           Launch a new career in as
           <br /> little as 6 months
         </h1>
-        <p className="text-md md:text-lg font-normal text-gray-500">
+        <p className="text-md md:text-lg font-normal text-gray-500 text-center lg:text-left">
           Sale ends today. Attain a world of knowledge — at
           <br /> home or on the go. Courses as low as ₹449.
         </p>
         <Link
           href="/courses"
-          className="text-white bg-blue-500 px-5 py-1 cursor-pointer rounded-md text-lg text-center w-fit"
+          className="text-white bg-blue-500 px-5 py-1 inline-block cursor-pointer rounded-md text-lg lg:text-left text-center w-fit"
         >
           Browes our courses
         </Link>
@@ -25,18 +26,20 @@ const Hero = () => {
       <div className="flex ">
         <Image
           src={heroCoursify}
-          alt="logo"
-          width={400}
+          alt="Hero banner"
+          width={500}
           height={500}
           objectFit="cover"
-          className="rounded-lg shadow-md"
+          className="rounded-lg shadow-xl"
         />
       </div>
-      <div className=" w-full">
+
+      <div className="w-full ">
         <Image
-          src={heroBg}
-          className=" w-[500px] h-[600px] absolute top-40 z-[-1] right-10 rotate-180 "
-          alt="HeroBg"
+          src={blurBg}
+          alt="blurImg"
+          objectFit="cover"
+          className="absolute top-[-100px] left-0 blur-2xl -z-10  opacity-30 rounded-full w-[450px] h-[450px]"
         />
       </div>
     </div>

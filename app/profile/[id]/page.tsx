@@ -11,7 +11,11 @@ const Profile = ({ params }: { params: { id: String } }) => {
     async () => await axios.get(`/api/getuser/${id}`)
   );
 
-  return <div>Profile</div>;
+  return (
+    <div className="relative max-w-screen-2xl mx-auto mt-40 lg:mt-80 px-14 gap-5 flex flex-col justify-center items-center">
+      Profile
+    </div>
+  );
 };
 
 export default Profile;

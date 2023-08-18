@@ -55,12 +55,12 @@ const NewCourse = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl mx-auto">
+    <div className="flex flex-col justify-center items-center mt-32 lg:mt-40 px-14 py-4 max-w-screen-2xl mx-auto">
       <h1 className="font-mono text-2xl md:text-3xl text-center">
         Create New Course
       </h1>
       <form
-        className="flex flex-col gap-4 w-[500px] mt-10"
+        className="flex flex-col gap-4 w-[400px] mt-10"
         onSubmit={handleFormSubmit}
       >
         <div className="flex flex-col gap-2 w-full">
