@@ -10,6 +10,7 @@ import { useState } from "react";
 import MobileNav from "./MobileNav";
 const Header = () => {
   const { loginUser } = useGetLoginUser();
+
   const [open, seOpen] = useState(false);
   return (
     <div className="fixed top-0 w-full z-10 bg-white opacity-90 ">
@@ -43,16 +44,7 @@ const Header = () => {
             />
           </Link>
         </div>
-        {loginUser ? (
-          <Logout />
-        ) : (
-          <Link
-            href="/register"
-            className="bg-blue-500 text-white px-4 py-1 text-sm rounded-md cursor-pointer hidden md-flex"
-          >
-            Register
-          </Link>
-        )}
+        {loginUser ? <Logout /> : <Link href={"/register"}>Register</Link>}
         <div
           className="md:hidden cursor-pointer flex gap-1 items-center"
           onClick={() => seOpen(!open)}
