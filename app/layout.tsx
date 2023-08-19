@@ -26,7 +26,11 @@ export default function RootLayout({
       <body>
         <Providers>
           <Header />
-          <ToastContainer />
+          <ToastContainer
+            autoClose={2000}
+            position="bottom-right"
+            theme="colored"
+          />
           {children}
         </Providers>
       </body>

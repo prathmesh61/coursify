@@ -2,6 +2,7 @@ import { Course } from "@/Model/Course";
 import { User } from "@/Model/User";
 import { ConnectionDB } from "@/utils/ConnectionDB";
 import { NextRequest, NextResponse } from "next/server";
+ConnectionDB();
 type courseTypeProps = {
   courseName: String;
   description: String;
@@ -14,7 +15,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const { courseName, description, banner, category, price, id } =
     await req.json();
   try {
-    await ConnectionDB();
     const newCourse = await Course.create({
       courseName,
       description,
@@ -37,7 +37,6 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
   try {
-    await ConnectionDB();
     const courses = await Course.find({}).populate("autherID");
     return NextResponse.json(courses, { status: 200 });
   } catch (error: any) {
