@@ -1,8 +1,9 @@
+ConnectionDB();
 import { Course } from "@/Model/Course";
 import { NextRequest, NextResponse } from "next/server";
 import { ConnectionDB } from "@/utils/ConnectionDB";
+import { User } from "@/Model/User";
 
-ConnectionDB();
 export const GET = async (
   req: NextRequest,
   { params }: { params: { id: string } },

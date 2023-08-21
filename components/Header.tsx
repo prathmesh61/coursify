@@ -21,9 +21,11 @@ const Header = () => {
           </h1>
         </Link>
         <div className="hidden md:flex items-center justify-center gap-8">
-          <Link href="/new-course" className="font-semibold text-sm">
-            Create Course
-          </Link>
+          {loginUser?.isSeller && (
+            <Link href="/new-course" className="font-semibold text-sm">
+              Create Course
+            </Link>
+          )}
           <Link
             href={`/profile/${loginUser?._id}`}
             className="font-semibold text-sm"

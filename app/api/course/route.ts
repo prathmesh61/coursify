@@ -1,8 +1,8 @@
+ConnectionDB();
 import { Course } from "@/Model/Course";
 import { User } from "@/Model/User";
 import { ConnectionDB } from "@/utils/ConnectionDB";
 import { NextRequest, NextResponse } from "next/server";
-ConnectionDB();
 type courseTypeProps = {
   courseName: String;
   description: String;
