@@ -3,14 +3,16 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import rightA from "@/public/right-arrow.svg";
-import { useGetLoginUser } from "@/hooks/useGetLoginUser";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/app/redux/features/userSlice";
 const MobileNav = () => {
-  const { loginUser } = useGetLoginUser();
+  const { user } = useSelector((state: any) => state.user);
+  const dispatch = useDispatch();
   const router = useRouter();
   const handleClick = () => {
-    if (localStorage && localStorage.getItem("user")) {
-      localStorage.removeItem("user");
+    if (user) {
+      dispatch(logOut());
       router.push("/login");
     }
   };
@@ -19,10 +21,7 @@ const MobileNav = () => {
       <Link href="/new-course" className="font-semibold text-sm">
         Create Course
       </Link>
-      <Link
-        href={`/profile/${loginUser?._id}`}
-        className="font-semibold text-sm"
-      >
+      <Link href={`/profile/${user?._id}`} className="font-semibold text-sm">
         Profile
       </Link>
       <Link
@@ -38,7 +37,7 @@ const MobileNav = () => {
           className=" bg-blue-500 rounded-full"
         />
       </Link>
-      {loginUser ? (
+      {user._id ? (
         <div
           onClick={handleClick}
           className="underline bg-slate-700 text-white px-4 py-1 text-sm rounded-md cursor-pointer "

@@ -1,10 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import heroCoursify from "@/public/HeroBgCoursify.gif";
 import heroBg from "@/public/hero-bg.png";
 import blurBg from "@/images/blurImg.svg";
+import { useSelector } from "react-redux";
 const Hero = () => {
+  const { user } = useSelector((state: any) => state.user);
+  console.log(user);
+
   return (
     <div className=" relative max-w-screen-2xl mx-auto mt-28 lg:mt-40 px-14 flex justify-center lg:justify-between items-center flex-wrap  ">
       <div className="flex flex-col justify-center mb-10 items-center lg:items-start  gap-7 text-center lg:text-left">

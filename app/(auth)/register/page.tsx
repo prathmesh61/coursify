@@ -5,11 +5,14 @@ import Link from "next/link";
 import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/app/redux/features/userSlice";
 const RegitserPage = () => {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -19,7 +22,7 @@ const RegitserPage = () => {
         password: password,
       });
       const data = res.data;
-      localStorage.setItem("user", JSON.stringify(data));
+      dispatch(setUser(data));
 
       router.push("/");
       toast.success("Register Successfully", { position: "bottom-right" });
@@ -28,13 +31,7 @@ const RegitserPage = () => {
       console.log(error);
     }
   };
-  const { data, mutate, isLoading } = useMutation(handleFormSubmit, {
-    onSuccess(data, variables, context) {
-      localStorage.setItem("user", JSON.stringify(data));
 
-      router.push("/");
-    },
-  });
   // console.log(data);
 
   return (

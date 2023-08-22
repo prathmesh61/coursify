@@ -2,8 +2,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { Category_Type, Course_Type } from "@/utils/types";
+
 const CoursesPage = () => {
-  const [courses, setCourses] = useState();
+  const [courses, setCourses] = useState<Course_Type | any>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +22,7 @@ const CoursesPage = () => {
 
   // unique categories set
   const uniqueCategories = [
-    ...new Set(courses?.map(({ category }) => category)),
+    ...new Set(courses?.map(({ category }: Category_Type) => category)),
   ];
 
   // random rating function
@@ -55,7 +57,7 @@ const CoursesPage = () => {
       </div>
       <div className="flex  justify-center items-center gap-4 flex-wrap">
         {courses &&
-          uniqueCategories?.map((item: String, index: number) => (
+          uniqueCategories?.map((item: string | any, index: number) => (
             <div className="bg-blue-500 px-2 cursor-pointer" key={index}>
               <h2 className="text-sm text-white font-semibold font-mono">
                 {item}
@@ -63,7 +65,7 @@ const CoursesPage = () => {
             </div>
           ))}
       </div>
-      <div className="mt-20 flex justify-around item-center flex-wrap w-full">
+      <div className="mt-20 flex justify-evenly items-center flex-wrap w-full">
         {courses &&
           filterData?.map((item: any, index: number) => (
             <Link

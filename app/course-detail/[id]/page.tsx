@@ -5,7 +5,11 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import arrowRight from "@/public/right-arrow.svg";
-const CourseDetail = ({ params }: any) => {
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/redux/features/userSlice";
+import { toast } from "react-toastify";
+import { Course_Type } from "@/utils/types";
+const CourseDetail = ({ params }: { params: { id: string } }) => {
   // fetching single course from params
   const { data, isLoading, isError } = useQuery({
     queryKey: ["courses"],
@@ -14,6 +18,15 @@ const CourseDetail = ({ params }: any) => {
       return res.data;
     },
   });
+  const dispatch = useDispatch();
+  const addCourseToCart = async (course: Course_Type) => {
+    try {
+      dispatch(addToCart(course));
+      toast.success("Course added to cart");
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  };
 
   // some funcation to get the course data
   const date = new Date(data?.createdAt);
@@ -86,7 +99,10 @@ const CourseDetail = ({ params }: any) => {
             src={data?.banner}
             alt={data?.courseName}
           />
-          <button className="bg-[#5624D0] text-white py-2 px-6 rounded-sm hover:bg-[#5524d0e6]">
+          <button
+            className="bg-[#5624D0] text-white py-2 px-6 rounded-sm hover:bg-[#5524d0e6]"
+            onClick={() => addCourseToCart(data)}
+          >
             Buy this course
           </button>
           <span className="text-xs text-gray-500 capitalize font-mono text-center">

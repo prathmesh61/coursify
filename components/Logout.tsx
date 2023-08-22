@@ -1,10 +1,17 @@
+"use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/app/redux/features/userSlice";
+
 const Logout = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.user);
+
   const handleClick = () => {
-    if (localStorage && localStorage.getItem("user")) {
-      localStorage.removeItem("user");
+    if (user) {
+      dispatch(logOut());
       router.push("/login");
     }
   };

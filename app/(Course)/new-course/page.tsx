@@ -1,9 +1,9 @@
 "use client";
-import { useGetLoginUser } from "@/hooks/useGetLoginUser";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 const NewCourse = () => {
   const [courseName, setCourseName] = useState("");
   const [description, setDescription] = useState("");
@@ -11,8 +11,8 @@ const NewCourse = () => {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const router = useRouter();
-  const { loginUser } = useGetLoginUser();
-  // console.log(loginUser?._id);
+  const { user } = useSelector((state: any) => state.user);
+  console.log(user._id);
 
   const CLOUDINARY_URL =
     "https://api.cloudinary.com/v1_1/dpvjdarqx/image/upload";
@@ -36,7 +36,7 @@ const NewCourse = () => {
         banner: data?.url || "",
         category,
         price,
-        id: loginUser?._id,
+        id: user?._id,
       });
       if (course.status === 200) {
         toast.success("Course Created Successfully", {
