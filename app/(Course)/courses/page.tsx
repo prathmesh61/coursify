@@ -3,16 +3,18 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Category_Type, Course_Type } from "@/utils/types";
+import Spinner from "@/components/Spinner";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course_Type | any>();
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get("/api/course");
         const data = await res.data;
         setCourses(data);
+        setLoading(false);
       } catch (error) {
         alert("Error in fetching data");
       }
@@ -41,6 +43,14 @@ const CoursesPage = () => {
     }
     return course.courseName.toLowerCase().includes(search.toLowerCase());
   });
+
+  if (loading) {
+    return (
+      <>
+        <Spinner />
+      </>
+    );
+  }
 
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-14 gap-5 flex flex-col items-start">

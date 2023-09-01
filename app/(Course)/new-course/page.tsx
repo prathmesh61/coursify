@@ -4,15 +4,17 @@ import axios from "axios";
 import React, { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 const NewCourse = () => {
   const [courseName, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [banner, setBanner] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [loading, setLoading] = useState(true);
+
   const router = useRouter();
   const { user } = useSelector((state: any) => state.user);
-  console.log(user._id);
 
   const CLOUDINARY_URL =
     "https://api.cloudinary.com/v1_1/dpvjdarqx/image/upload";
@@ -20,7 +22,13 @@ const NewCourse = () => {
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    // setBanner(banner); //error
+    // check if all fields are filled
+    if (!courseName || !description || !banner || !category || !price) {
+      toast.error("Please fill all the fields", {
+        position: "bottom-right",
+      });
+      return;
+    }
 
     const file = banner;
     const formData = new FormData();
@@ -42,6 +50,7 @@ const NewCourse = () => {
         toast.success("Course Created Successfully", {
           position: "bottom-right",
         });
+
         setCourseName("");
         setDescription("");
         setBanner("");
@@ -53,7 +62,24 @@ const NewCourse = () => {
       console.log(error);
     }
   };
-
+  if (!user._id) {
+    return (
+      <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl h-screen mx-auto">
+        <Link href={"/login"} className="text-2xl hover:underline font-mono">
+          You need to login to create a course
+        </Link>
+      </div>
+    );
+  }
+  if (user?.isSeller === false) {
+    return (
+      <div className="flex flex-col justify-center items-center h-screen px-14 py-4 max-w-screen-2xl mx-auto ">
+        <Link href={"/contact"} className="text-2xl hover:underline font-mono">
+          Want to become a seller? CONTACT US
+        </Link>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col justify-center items-center mt-32 lg:mt-40 px-14 py-4 max-w-screen-2xl mx-auto">
       <h1 className="font-mono text-2xl md:text-3xl text-center">

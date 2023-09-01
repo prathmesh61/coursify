@@ -5,11 +5,16 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import arrowRight from "@/public/right-arrow.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/app/redux/features/userSlice";
 import { toast } from "react-toastify";
-import { Course_Type } from "@/utils/types";
+import { Course_Type, User_Type } from "@/utils/types";
+import Spinner from "@/components/Spinner";
+import { useRouter } from "next/navigation";
 const CourseDetail = ({ params }: { params: { id: string } }) => {
+  const { user }: User_Type = useSelector((state: any) => state.user);
+  console.log(user);
+  const router = useRouter();
   // fetching single course from params
   const { data, isLoading, isError } = useQuery({
     queryKey: ["courses"],
@@ -30,6 +35,15 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
 
   // some funcation to get the course data
   const date = new Date(data?.createdAt);
+
+  if (isLoading) {
+    return (
+      <>
+        <Spinner />
+      </>
+    );
+  }
+
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-14 gap-5 flex flex-col items-start">
       <div className="flex items-center gap-2">
@@ -50,7 +64,7 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
             {data?.courseName}
           </h1>
           <p className="text-md sm:text-lg text-gray-600 ">
-            {data?.description.slice(0, 300) + "..."}
+            {data?.description}
           </p>
           <p className="text-sm text-gray-600 underline cursor-pointer ">
             Course creator:- {data?.autherID?.username}
@@ -99,12 +113,18 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
             src={data?.banner}
             alt={data?.courseName}
           />
-          <button
-            className="bg-[#5624D0] text-white py-2 px-6 rounded-sm hover:bg-[#5524d0e6]"
-            onClick={() => addCourseToCart(data)}
-          >
-            Buy this course
-          </button>
+          {user._id ? (
+            <button
+              className="bg-[#5624D0] text-white py-2 px-6 rounded-sm hover:bg-[#5524d0e6]"
+              onClick={() => addCourseToCart(data)}
+            >
+              Buy this course
+            </button>
+          ) : (
+            <Link href={"/login"} className="text-md hover:underline font-mono">
+              You need to login first to buy this course
+            </Link>
+          )}
           <span className="text-xs text-gray-500 capitalize font-mono text-center">
             30-Day Money-Back Guarantee Full Lifetime Access
           </span>

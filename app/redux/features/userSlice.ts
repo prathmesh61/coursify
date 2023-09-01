@@ -1,3 +1,4 @@
+import { User_Type } from "@/utils/types";
 import { createSlice } from "@reduxjs/toolkit";
 type CartType = {
   description: string;
@@ -22,7 +23,7 @@ type CartType = {
 };
 
 export interface CounterState {
-  user: [];
+  user: User_Type[];
   cart: CartType[];
 }
 
@@ -40,6 +41,7 @@ export const userSlice = createSlice({
     },
     logOut: (state) => {
       state.user = [];
+      state.cart = [];
     },
     addToCart: (state, action) => {
       const course = state.cart.find((item) => item._id === action.payload._id);
@@ -53,11 +55,14 @@ export const userSlice = createSlice({
       const course = state.cart.filter((pro) => pro._id !== action.payload._id);
       state.cart = course;
     },
+    emptyCart: (state) => {
+      state.cart = [];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setUser, logOut, addToCart, removerFromCart } =
+export const { setUser, logOut, addToCart, removerFromCart, emptyCart } =
   userSlice.actions;
 
 export default userSlice.reducer;

@@ -43,3 +43,22 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     throw new Error(error);
   }
 };
+
+export const PATCH = async (
+  req: NextRequest,
+  { params }: { params: { id: string } },
+  res: NextResponse
+) => {
+  const id = params.id;
+  try {
+    // push this PurchasedCourse to the user's PurchasedCourses array
+    const Updateduser = await User.findOneAndUpdate(
+      { _id: id },
+      { $push: { PurchasedCourses: id } },
+      { new: true }
+    );
+    return NextResponse.json(Updateduser, { status: 200 });
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};

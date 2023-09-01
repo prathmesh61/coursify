@@ -7,6 +7,7 @@ import arrowDown from "@/public/arrow-down.svg";
 import { useState } from "react";
 import MobileNav from "./MobileNav";
 import { useSelector } from "react-redux";
+import cartImg from "@/public/cart.svg";
 const Header = () => {
   const { user, cart } = useSelector((state: any) => state.user);
 
@@ -29,7 +30,7 @@ const Header = () => {
             href={`/profile/${user?._id}`}
             className="font-semibold text-sm"
           >
-            Profile{cart.length}
+            Profile
           </Link>
           <Link
             href="/courses"
@@ -43,6 +44,12 @@ const Header = () => {
               alt="rightArrow"
               className=" bg-blue-500 rounded-full"
             />
+          </Link>
+          <Link
+            href="/cart"
+            className="font-semibold text-sm flex items-center gap-2"
+          >
+            Cart({cart.length})
           </Link>
         </div>
         {user?._id ? <Logout /> : <Link href={"/register"}>Register</Link>}
