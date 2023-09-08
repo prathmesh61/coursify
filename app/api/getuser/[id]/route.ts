@@ -12,7 +12,10 @@ export const GET = async (
 
   try {
     // find user by id
-    const user = await User.findById(id).populate("PurchasedCourses");
+    const user = await User.findById(id).populate([
+      "PurchasedCourses",
+      "courses",
+    ]);
     if (!user) {
       return new NextResponse(`User not found`);
     }

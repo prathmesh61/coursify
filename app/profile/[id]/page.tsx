@@ -12,10 +12,7 @@ const Profile = ({ params }: { params: { id: String } }) => {
     ["user", id],
     async () => await axios.get(`/api/getuser/${id}`)
   );
-  const { data: createdCourse } = useQuery(
-    ["userCourses"],
-    async () => await axios.get(`/api/CreatorCourses/${id}`)
-  );
+
   console.log(data);
 
   if (isLoading) {

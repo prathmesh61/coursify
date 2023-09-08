@@ -9,28 +9,54 @@ import { useRouter } from "next/navigation";
 import { emptyCart } from "@/app/redux/features/userSlice";
 import Script from "next/script";
 
+function loadScript(src: string) {
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = src;
+    script.onload = () => {
+      resolve(true);
+    };
+    script.onerror = () => {
+      resolve(false);
+    };
+    document.body.appendChild(script);
+  });
+}
+
 const CartPage = () => {
   const { cart, user } = useSelector((state: any) => state.user);
   const router = useRouter();
   const dispatch = useDispatch();
 
-  // razorpay init function
+  console.log(user);
 
   // cart ID array
   const courseIDs = cart.map((course: Single_Course_Type) => course._id);
 
-  // purchase course function
+  // const buyCourse = async () => {
+  //   try {
+  //     const res = await axios.patch(`/api/course/purchase`, {
+  //       userID: user._id,
+  //       courseIDs: courseIDs,
+  //     });
+  //     await res.data;
+  //     if (res.status === 200) {
+  //       toast.success("Course purchased");
+  //       dispatch(emptyCart());
+  //       router.push("/success");
+  //     }
+  //   } catch (error) {
+  //     toast.error("Something went wrong");
+  //   }
+  // };
   const buyCourse = async () => {
     try {
       const res = await axios.patch(`/api/course/purchase`, {
         userID: user._id,
         courseIDs: courseIDs,
       });
-      await res.data;
       if (res.status === 200) {
-        toast.success("Course purchased");
         dispatch(emptyCart());
-        router.push("/success");
       }
     } catch (error) {
       toast.error("Something went wrong");
@@ -43,6 +69,51 @@ const CartPage = () => {
   );
 
   // razorpay payment method
+  const paymentFun = async () => {
+    const res = await loadScript(
+      "https://checkout.razorpay.com/v1/checkout.js"
+    );
+
+    if (!res) {
+      alert("Razorpay SDK failed to load. Are you online?");
+      return;
+    }
+
+    try {
+      const data = await axios.post("/api/payment", { total });
+      const paymentRes = await data.data;
+      console.log(paymentRes);
+
+      const options = {
+        key: process.env.RAZORPAY_KEY,
+        currency: paymentRes.currency,
+        amount: paymentRes.amount.toString(),
+        order_id: paymentRes.id,
+        name: "This is you order amount",
+        description:
+          "Thank you for buying course this course complete you Goals",
+        Image:
+          "https://avatars.githubusercontent.com/u/104343605?s=400&u=cb0aae945da094c67c3b53667f029b3b6520e413&v=4",
+
+        handler: function (response: any) {
+          alert(response.razorpay_payment_id);
+          alert(response.razorpay_order_id);
+          alert(response.razorpay_signature);
+        },
+        prefill: {
+          name: user?.username,
+          email: user?.email,
+          phone_number: "9899999999",
+        },
+      };
+      const _window = window as any;
+
+      const paymentObject = new _window.Razorpay(options);
+      paymentObject.open();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
   if (cart === null) {
     return <div>Cart is empty</div>;
@@ -71,7 +142,7 @@ const CartPage = () => {
           </h3>
           <button
             className="bg-blue-500 h-[50px] w-full text-white mt-4"
-            onClick={buyCourse}
+            onClick={paymentFun}
           >
             Checkout
           </button>
