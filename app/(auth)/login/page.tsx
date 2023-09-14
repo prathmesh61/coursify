@@ -5,6 +5,7 @@ import React, { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/app/redux/features/userSlice";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -20,6 +21,8 @@ const LoginPage = () => {
       });
       const data = res.data;
       dispatch(setUser(data));
+      toast.success("Register Successfully", { position: "top-center" });
+
       router.push("/");
     } catch (error) {
       console.log(error);

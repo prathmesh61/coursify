@@ -23,8 +23,8 @@ export default function RootLayout({
           <Header />
           <ToastContainer
             autoClose={2000}
-            position="bottom-right"
-            theme="colored"
+            position="top-center"
+            theme="light"
           />
           {children}
         </Providers>

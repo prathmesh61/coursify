@@ -1,6 +1,6 @@
 "use client";
 import CartCourse from "@/components/CartCourse";
-import { Single_Course_Type } from "@/utils/types";
+import { CartType, Course_Type, Single_Course_Type } from "@/utils/types";
 import axios from "axios";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { emptyCart } from "@/app/redux/features/userSlice";
 import Script from "next/script";
+import { Payment } from "@/Model/Payment";
 
 function loadScript(src: string) {
   return new Promise((resolve) => {
@@ -28,10 +29,10 @@ const CartPage = () => {
   const router = useRouter();
   const dispatch = useDispatch();
 
-  console.log(user);
+  console.log(cart);
 
   // cart ID array
-  const courseIDs = cart.map((course: Single_Course_Type) => course._id);
+  const courseIDs = cart.map((course: CartType) => course._id);
 
   // const buyCourse = async () => {
   //   try {
@@ -64,12 +65,59 @@ const CartPage = () => {
   };
   // cart total reduce method
   const total = cart.reduce(
-    (acc: number, curr: Single_Course_Type) => acc + curr.price,
+    (acc: number, curr: Course_Type) => acc + curr.price,
     0
   );
 
   // razorpay payment method
-  const paymentFun = async () => {
+  // const paymentFun = async () => {
+  //   const res = await loadScript(
+  //     "https://checkout.razorpay.com/v1/checkout.js"
+  //   );
+
+  //   if (!res) {
+  //     alert("Razorpay SDK failed to load. Are you online?");
+  //     return;
+  //   }
+
+  //   try {
+  //     const data = await axios.post("/api/payment", { total });
+  //     const paymentRes = await data.data;
+  //     console.log(paymentRes);
+
+  //     const options = {
+  //       key: process.env.RAZORPAY_KEY,
+  //       currency: paymentRes.currency,
+  //       amount: paymentRes.amount.toString(),
+  //       order_id: paymentRes.id,
+  //       name: "This is you order amount",
+  //       description:
+  //         "Thank you for buying course this course complete you Goals",
+  //       Image:
+  //         "https://avatars.githubusercontent.com/u/104343605?s=400&u=cb0aae945da094c67c3b53667f029b3b6520e413&v=4",
+
+  //       handler: function (response: any) {
+  //         alert(response.razorpay_payment_id);
+  //         alert(response.razorpay_order_id);
+  //         alert(response.razorpay_signature);
+  //       },
+  //       prefill: {
+  //         name: user?.username,
+  //         email: user?.email,
+  //         phone_number: "9899999999",
+  //       },
+  //     };
+  //     const _window = window as any;
+
+  //     const paymentObject = new _window.Razorpay(options);
+  //     paymentObject.open();
+  //   } catch (error: any) {
+  //     console.log(error);
+  //   }
+  // };
+
+  /// razorpay callback method
+  const checkoutHandler = async () => {
     const res = await loadScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -79,42 +127,37 @@ const CartPage = () => {
       return;
     }
 
-    try {
-      const data = await axios.post("/api/payment", { total });
-      const paymentRes = await data.data;
-      console.log(paymentRes);
+    const data = await axios.post("/api/payment", { total });
+    const paymentRes = await data.data;
+    const options = {
+      key: process.env.RAZORPAY_KEY,
+      amount: paymentRes.amount.toString(),
+      currency: paymentRes.currency,
+      name: "Coursify",
+      description: "Career changing courses",
+      Image:
+        "https://avatars.githubusercontent.com/u/104343605?s=400&u=cb0aae945da094c67c3b53667f029b3b6520e413&v=4",
+      order_id: paymentRes.id,
+      handler: function (response: any) {
+        buyCourse();
+      },
+      prefill: {
+        name: "Gaurav Kumar",
+        email: "gaurav.kumar@example.com",
+        contact: "9999999999",
+      },
+      notes: {
+        address: "Razorpay Corporate Office",
+      },
+      theme: {
+        color: "#121212",
+      },
+    };
+    const _window = window as any;
 
-      const options = {
-        key: process.env.RAZORPAY_KEY,
-        currency: paymentRes.currency,
-        amount: paymentRes.amount.toString(),
-        order_id: paymentRes.id,
-        name: "This is you order amount",
-        description:
-          "Thank you for buying course this course complete you Goals",
-        Image:
-          "https://avatars.githubusercontent.com/u/104343605?s=400&u=cb0aae945da094c67c3b53667f029b3b6520e413&v=4",
-
-        handler: function (response: any) {
-          alert(response.razorpay_payment_id);
-          alert(response.razorpay_order_id);
-          alert(response.razorpay_signature);
-        },
-        prefill: {
-          name: user?.username,
-          email: user?.email,
-          phone_number: "9899999999",
-        },
-      };
-      const _window = window as any;
-
-      const paymentObject = new _window.Razorpay(options);
-      paymentObject.open();
-    } catch (error: any) {
-      console.log(error);
-    }
+    const razor = new _window.Razorpay(options);
+    razor.open();
   };
-
   if (cart === null) {
     return <div>Cart is empty</div>;
   }
@@ -142,7 +185,7 @@ const CartPage = () => {
           </h3>
           <button
             className="bg-blue-500 h-[50px] w-full text-white mt-4"
-            onClick={paymentFun}
+            onClick={checkoutHandler}
           >
             Checkout
           </button>

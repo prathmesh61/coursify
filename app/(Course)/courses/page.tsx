@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Category_Type, Course_Type } from "@/utils/types";
 import Spinner from "@/components/Spinner";
+import CourseCard from "@/components/CourseCard";
 
 const CoursesPage = () => {
   const [courses, setCourses] = useState<Course_Type | any>();
@@ -37,12 +38,12 @@ const CoursesPage = () => {
   // filter data through search and no search then list all courses
   const filterData = courses?.filter((course: any) => {
     // if search is empty then list all courses
-
     if (search === "") {
       return courses;
     }
     return course.courseName.toLowerCase().includes(search.toLowerCase());
   });
+  console.log(filterData);
 
   if (loading) {
     return (
@@ -66,51 +67,18 @@ const CoursesPage = () => {
         />
       </div>
       <div className="flex  justify-center items-center gap-4 flex-wrap">
-        {courses &&
-          uniqueCategories?.map((item: string | any, index: number) => (
-            <div className="bg-blue-500 px-2 cursor-pointer" key={index}>
-              <h2 className="text-sm text-white font-semibold font-mono">
-                {item}
-              </h2>
-            </div>
-          ))}
+        {uniqueCategories?.map((item: string | any, index: number) => (
+          <div className="bg-blue-500 px-2 cursor-pointer" key={index}>
+            <h2 className="text-sm text-white font-semibold font-mono">
+              {item}
+            </h2>
+          </div>
+        ))}
       </div>
       <div className="mt-20 flex justify-evenly items-center flex-wrap w-full">
-        {courses &&
-          filterData?.map((item: any, index: number) => (
-            <Link
-              href={`/course-detail/${item?._id}`}
-              className="flex flex-col gap-1 w-[400px] h-[400px] item-start cursor-pointer  py-8 px-4"
-              key={index}
-            >
-              <img
-                src={item?.banner}
-                alt={item?.courseName}
-                className="w-[400px] h-[235px] object-contain"
-              />
-              <h3 className="font-bold text-xl text-black capitalize">
-                {item?.courseName}
-              </h3>
-              <p className="font-normal text-sm text-gray-500 capitalize">
-                instructor:- {item?.autherID?.username}
-              </p>
-              <h3 className="font-bold text-xl text-black capitalize">
-                ₹{item?.price}
-              </h3>
-              <p className="font-normal text-sm text-gray-500 capitalize">
-                Category:- {item?.category}
-              </p>
-              <p className="font-normal text-sm flex items-center gap-1 capitalize">
-                <span className="text-yellow-500 text-md">{randomRating}</span>
-
-                {[1, 2, 3, 4, 5].map((item: any, index: number) => (
-                  <span key={index} className="text-yellow-500">
-                    ★
-                  </span>
-                ))}
-              </p>
-            </Link>
-          ))}
+        {filterData?.map((item: Course_Type) => (
+          <CourseCard key={item?._id} item={item} />
+        ))}
       </div>
     </div>
   );

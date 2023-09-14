@@ -25,7 +25,7 @@ const RegitserPage = () => {
       dispatch(setUser(data));
 
       router.push("/");
-      toast.success("Register Successfully", { position: "bottom-right" });
+      toast.success("Register Successfully", { position: "top-center" });
       console.log(data);
     } catch (error) {
       console.log(error);

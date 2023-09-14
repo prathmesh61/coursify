@@ -1,8 +1,9 @@
 export type CartType = {
   description: string;
   quantity: number;
-  coursename: string;
+  courseName: string;
   banner: string;
+  category: string;
   price: string | number;
   createdAt: string | Date;
   updatedAt: string | Date;
@@ -23,9 +24,10 @@ export type CartType = {
 export type Course_Type = {
   description: string;
   quantity: number;
-  coursename: string;
+  courseName: string;
   banner: string;
-  price: string | number;
+  category: string;
+  price: number;
   createdAt: string | Date;
   updatedAt: string | Date;
   __v: number;
@@ -41,25 +43,28 @@ export type Course_Type = {
     _id: string;
   };
 };
-export type Stripe_Type = {
-  description: string;
-  quantity: number;
-  coursename: string;
-  banner: string;
-  price: string | number;
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  __v: number;
-  _id: string;
-  autherID: {
-    purchasedCourses: string[];
-    courses: string[];
-    email: string;
-    isSeller: boolean;
-    password: string;
-    username: string;
+export type Course_Card_Type = {
+  item: {
+    description: string;
+    quantity: number;
+    courseName: string;
+    banner: string;
+    category: string;
+    price: string | number;
+    createdAt: string | Date;
+    updatedAt: string | Date;
     __v: number;
     _id: string;
+    autherID: {
+      purchasedCourses: string[];
+      courses: string[];
+      email: string;
+      isSeller: boolean;
+      password: string;
+      username: string;
+      __v: number;
+      _id: string;
+    };
   };
 };
 
@@ -91,9 +96,10 @@ export type Single_Course_Type = {
   course: {
     description: string;
     quantity: number;
-    coursename: string;
+    courseName: string;
+    category: string;
     banner: string;
-    price: string | number;
+    price: number | string;
     createdAt: string | Date;
     updatedAt: string | Date;
     __v: number;
