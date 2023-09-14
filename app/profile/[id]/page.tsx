@@ -21,6 +21,7 @@ const Profile = ({ params }: { params: { id: String } }) => {
     ["user", id],
     async () => await axios.get(`/api/getuser/${id}`)
   );
+  // console.log(data?.data);
 
   const purchasePrice = data?.data?.PurchasedCourses?.map(
     (item: Course_Type) => item

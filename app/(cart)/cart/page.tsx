@@ -162,7 +162,7 @@ const CartPage = () => {
     return <div>Cart is empty</div>;
   }
   return (
-    <div className="relative max-w-screen-2xl mx-auto mt-28 px-14 gap-5 flex flex-col justify-center ">
+    <div className="relative max-w-screen-2xl mx-auto mt-28 px-4 gap-5 flex flex-col justify-center ">
       <h1 className="font-extrabold text-xl md:text-3xl text-black font-mono">
         Shopping Cart
       </h1>

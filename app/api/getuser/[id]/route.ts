@@ -9,6 +9,7 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   const { id } = params;
+  console.log(id);
 
   try {
     // find user by id
@@ -20,7 +21,6 @@ export const GET = async (
       return new NextResponse(`User not found`);
     }
 
-    // console.log(user._doc);
     const { password, ...others } = user._doc;
     return new NextResponse(JSON.stringify(others), { status: 200 });
   } catch (error) {

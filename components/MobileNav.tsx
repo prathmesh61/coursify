@@ -24,6 +24,9 @@ const MobileNav = () => {
       <Link href={`/profile/${user?._id}`} className="font-semibold text-sm">
         Profile
       </Link>
+      <Link href={`/cart`} className="font-semibold text-sm">
+        Cart
+      </Link>
       <Link
         href="/courses"
         className="font-semibold text-sm flex items-center gap-2"

@@ -54,7 +54,7 @@ const CoursesPage = () => {
   }
 
   return (
-    <div className="relative max-w-screen-2xl mx-auto mt-20 px-14 gap-5 flex flex-col items-start">
+    <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">
       <div className="flex w-full">
         <input
           type="text"
@@ -75,7 +75,7 @@ const CoursesPage = () => {
           </div>
         ))}
       </div>
-      <div className="mt-20 flex justify-evenly items-center flex-wrap w-full">
+      <div className="mt-20 flex justify-evenly items-center flex-wrap w-full ">
         {filterData?.map((item: Course_Type) => (
           <CourseCard key={item?._id} item={item} />
         ))}

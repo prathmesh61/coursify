@@ -45,16 +45,16 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
   }
 
   return (
-    <div className="relative max-w-screen-2xl mx-auto mt-20 px-14 gap-5 flex flex-col items-start">
+    <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">
       <div className="flex items-center gap-2">
         <Link
           href={"/courses"}
-          className="font-semibold  cursor-pointer hover:underline capitalize"
+          className="font-semibold sm:text-md text-xs    cursor-pointer hover:underline capitalize"
         >
           Courses
         </Link>
         {"  >  "}
-        <p className="font-semibold  cursor-pointer hover:underline capitalize">
+        <p className="font-semibold sm:text-md text-xs   cursor-pointer hover:underline capitalize">
           {data?.courseName}
         </p>
       </div>
@@ -107,7 +107,7 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
             </ol>
           </div>
         </div>
-        <div className="w-full lg:w-[48%] flex flex-col gap-4">
+        <div className="w-full lg:w-[48%]  flex flex-col gap-4">
           <img
             className=" w-full object-contain "
             src={data?.banner}

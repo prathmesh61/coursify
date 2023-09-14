@@ -45,7 +45,7 @@ const CartCourse = ({ course }) => {
           ))}
         </p>
         <p className="text-xl font-extrabold font-mono">₹{course?.price}</p>
-        <div className="flex items-center gap-1">
+        <div className="hidden sm:flex items-center gap-1">
           <span className="text-xs font-bold ">
             Category {course?.category}
           </span>

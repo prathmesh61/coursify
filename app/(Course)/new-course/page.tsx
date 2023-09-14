@@ -86,7 +86,7 @@ const NewCourse = () => {
         Create New Course
       </h1>
       <form
-        className="flex flex-col gap-4 w-[400px] mt-10"
+        className="flex flex-col gap-4 md:w-[400px] w-[300px] mt-10"
         onSubmit={handleFormSubmit}
       >
         <div className="flex flex-col gap-2 w-full">
