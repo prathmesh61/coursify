@@ -1,42 +1,18 @@
 "use client";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import arrowRight from "@/public/right-arrow.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "@/app/redux/features/userSlice";
-import { toast } from "react-toastify";
-import { Course_Type, User_Type } from "@/utils/types";
+
 import Spinner from "@/components/Spinner";
-import { useRouter } from "next/navigation";
+import AddToCartBtn from "@/components/AddToCartBtn";
+import useFetchSingleCourse from "@/hooks/useFetchSingleCourse";
+
 const CourseDetail = ({ params }: { params: { id: string } }) => {
-  const { user }: User_Type = useSelector((state: any) => state.user);
-  console.log(user);
-  const router = useRouter();
-  // fetching single course from params
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["courses"],
-    queryFn: async () => {
-      const res = await axios.get(`/api/course/${params.id}`);
-      return res.data;
-    },
-  });
-  const dispatch = useDispatch();
-  const addCourseToCart = async (course: Course_Type) => {
-    try {
-      dispatch(addToCart(course));
-      toast.success("Course added to cart");
-    } catch (error: any) {
-      throw new Error(error);
-    }
-  };
-
+  const { course, loading } = useFetchSingleCourse(params.id);
   // some funcation to get the course data
-  const date = new Date(data?.createdAt);
+  const date = new Date(course?.createdAt);
 
-  if (isLoading) {
+  if (loading) {
     return (
       <>
         <Spinner />
@@ -55,19 +31,19 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
         </Link>
         {"  >  "}
         <p className="font-semibold sm:text-md text-xs   cursor-pointer hover:underline capitalize">
-          {data?.courseName}
+          {course?.courseName}
         </p>
       </div>
       <div className="w-full flex flex-wrap-reverse justify-between  gap-4">
         <div className="flex flex-col items-start gap-2 w-full  lg:w-[48%] px-2">
           <h1 className="font-extrabold text-3xl sm:text-4xl ">
-            {data?.courseName}
+            {course?.courseName}
           </h1>
           <p className="text-md sm:text-lg text-gray-600 ">
-            {data?.description}
+            {course?.description}
           </p>
           <p className="text-sm text-gray-600 underline cursor-pointer ">
-            Course creator:- {data?.autherID?.username}
+            Course creator:- {course?.autherID?.username}
           </p>
           <p className="font-normal text-sm flex items-center gap-1 capitalize">
             {[1, 2, 3, 4, 5].map((item: any, index: number) => (
@@ -80,7 +56,7 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
           <p className="text-sm text-gray-500  cursor-pointer ">
             Created At:- {date.toLocaleDateString("en-US")}
           </p>
-          <p className="text-3xl font-extrabold text-black">₹{data?.price}</p>
+          <p className="text-3xl font-extrabold text-black">₹{course?.price}</p>
           <div className="flex flex-col gap-2 mt-5">
             <h3 className="font-bold text-xl text-black text-left flex items-center gap-1 ">
               Requirements
@@ -110,21 +86,11 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
         <div className="w-full lg:w-[48%]  flex flex-col gap-4">
           <img
             className=" w-full object-contain "
-            src={data?.banner}
-            alt={data?.courseName}
+            src={course?.banner}
+            alt={course?.courseName}
           />
-          {user._id ? (
-            <button
-              className="bg-[#5624D0] text-white py-2 px-6 rounded-sm hover:bg-[#5524d0e6]"
-              onClick={() => addCourseToCart(data)}
-            >
-              Buy this course
-            </button>
-          ) : (
-            <Link href={"/login"} className="text-md hover:underline font-mono">
-              You need to login first to buy this course
-            </Link>
-          )}
+
+          <AddToCartBtn course={course} />
           <span className="text-xs text-gray-500 capitalize font-mono text-center">
             30-Day Money-Back Guarantee Full Lifetime Access
           </span>

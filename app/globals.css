@@ -19,12 +19,7 @@ html {
   background-color: rgb(41, 41, 230);
 }
 .learMoreGran {
-  background: linear-gradient(
-    123.77deg,
-    #8a2be2 -6.46%,
-    rgb(75, 102, 202) 59.04%,
-    #f8f8ff 124.53%
-  );
+  background-image: linear-gradient(147deg, #0045ff 13% 13%, #00deff 100%);
   width: 400px;
   height: 400px;
 }

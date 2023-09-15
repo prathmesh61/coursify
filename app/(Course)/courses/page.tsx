@@ -1,49 +1,12 @@
 "use client";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { Category_Type, Course_Type } from "@/utils/types";
 import Spinner from "@/components/Spinner";
 import CourseCard from "@/components/CourseCard";
+import { useFetchCourse } from "@/hooks/useFetchCourse";
 
 const CoursesPage = () => {
-  const [courses, setCourses] = useState<Course_Type | any>();
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get("/api/course");
-        const data = await res.data;
-        setCourses(data);
-        setLoading(false);
-      } catch (error) {
-        alert("Error in fetching data");
-      }
-    };
-    fetchData();
-  }, []);
-
-  // unique categories set
-  const uniqueCategories = [
-    ...new Set(courses?.map(({ category }: Category_Type) => category)),
-  ];
-
-  // random rating function
-  const randomRating = Math.floor(Math.random() * (5 - 1 + 1) + 1);
-
-  // search funcationality
-  const [search, setSearch] = useState("");
-  const [filteredCourses, setFilteredCourses] = useState([]);
-
-  // filter data through search and no search then list all courses
-  const filterData = courses?.filter((course: any) => {
-    // if search is empty then list all courses
-    if (search === "") {
-      return courses;
-    }
-    return course.courseName.toLowerCase().includes(search.toLowerCase());
-  });
-  console.log(filterData);
+  const { loading, search, setSearch, filterData, uniqueCategories } =
+    useFetchCourse();
 
   if (loading) {
     return (

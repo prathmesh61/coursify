@@ -36,7 +36,7 @@ const LearnMore = () => {
           width={400}
           height={800}
         />
-        <div className="absolute learMoreGran -z-10 opacity-60 top-[-40px] right-0 blur-2xl rounded-full" />
+        <div className="absolute learMoreGran -z-10 opacity-40 top-[-40px] right-0 blur-2xl rounded-full" />
       </div>
     </div>
   );
