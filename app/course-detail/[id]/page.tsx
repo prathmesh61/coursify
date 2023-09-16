@@ -1,8 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
-import arrowRight from "@/public/right-arrow.svg";
-
-import AddToCartBtn from "@/components/AddToCartBtn";
 import CourseInfo from "@/components/CourseInfo";
 async function getData(Api_URI: string) {
   const res = await fetch(Api_URI);

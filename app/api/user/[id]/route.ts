@@ -2,28 +2,32 @@ import { Course } from "@/Model/Course";
 import { User } from "@/Model/User";
 import { ConnectionDB } from "@/utils/ConnectionDB";
 import { NextRequest, NextResponse } from "next/server";
-ConnectionDB();
 
 export const GET = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
   const { id } = params;
-  console.log(id);
 
   try {
     // find user by id
+    await ConnectionDB();
     const user = await User.findById(id).populate([
-      "PurchasedCourses",
-      "courses",
+      {
+        path: "courses",
+        model: Course,
+      },
+      {
+        path: "PurchasedCourses",
+        model: Course,
+      },
     ]);
-    if (!user) {
-      return new NextResponse(`User not found`);
-    }
 
-    const { password, ...others } = user._doc;
-    return new NextResponse(JSON.stringify(others), { status: 200 });
+    return NextResponse.json(user);
   } catch (error) {
-    new NextResponse(`Somthing went wrong `);
+    const errorResponse = {
+      error: "Something went wrong",
+    };
+    return NextResponse.json(errorResponse, { status: 500 }); // Set appropriate status code
   }
 };

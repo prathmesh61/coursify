@@ -79,6 +79,15 @@ export type User_Type = {
     _id: string;
   };
 };
+export type Single_User_Type = {
+  purchasedCourses: string[];
+  courses: string[];
+  email: string;
+  isSeller: boolean;
+  username: string;
+  __v: number;
+  _id: string;
+};
 
 export type StoreState_Type = {
   cart: CartType[];
