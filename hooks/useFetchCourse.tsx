@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Category_Type, Course_Type } from "@/utils/types";
 
@@ -10,8 +9,8 @@ export const useFetchCourse = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("/api/course");
-        const data = await res.data;
+        const res = await fetch("/api/course");
+        const data = await res.json();
         setAllCourses(data);
         setLoading(false);
       } catch (error) {
@@ -24,7 +23,7 @@ export const useFetchCourse = () => {
   // search funcationality
 
   // filter data through search and no search then list all courses
-  const filterData = allCourses?.filter((course: any) => {
+  const filterData = allCourses?.filter((course: Course_Type) => {
     // if search is empty then list all courses
     if (search === "") {
       return allCourses;

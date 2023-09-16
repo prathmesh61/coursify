@@ -121,7 +121,7 @@ const Profile = ({ params }: { params: { id: String } }) => {
             }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="price" />
+            <YAxis />
             <Tooltip />
             <Area
               type="monotone"

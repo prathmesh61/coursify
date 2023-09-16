@@ -91,7 +91,9 @@ export type Error_Type = {
 export type Category_Type = {
   category: string[];
 };
-
+type FilterCourseType = {
+  data: Course_Type[];
+};
 export type Single_Course_Type = {
   course: {
     description: string;
