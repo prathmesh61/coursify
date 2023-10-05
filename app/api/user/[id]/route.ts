@@ -13,7 +13,7 @@ export const GET = async (
   try {
     // find user by id
     await ConnectionDB();
-    const user = await User.findOne({ _id: id })
+    const user = await User.findById({ _id: id })
       .populate([
         {
           path: "courses",

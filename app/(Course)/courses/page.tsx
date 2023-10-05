@@ -12,7 +12,6 @@ async function getData(Api_URI: string) {
 }
 const CoursesPage = async () => {
   const data = await getData(process.env.API_URL + "/api/course");
-  console.log(data);
 
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">

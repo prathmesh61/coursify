@@ -11,13 +11,12 @@ export const POST = async (request: NextRequest) => {
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return NextResponse.json({
-        message: "User not exist register",
-        success: false,
-      });
+      return NextResponse.json("Please try Again..", { status: 403 });
     }
     const validPassword = await bcrypt.compare(password, user.password);
-
+    if (!validPassword) {
+      return NextResponse.json("Email Or Password Wrong..", { status: 403 });
+    }
     //send verification email
     const { password: _, ...rest } = user._doc;
     // console.log(rest);

@@ -21,10 +21,12 @@ const LoginPage = () => {
       });
       const data = res.data;
       dispatch(setUser(data));
-      toast.success("Register Successfully", { position: "top-center" });
+      toast.success("Login Successfully", { position: "top-center" });
 
       router.push("/");
     } catch (error) {
+      toast.error("Somthing Wrong..", { position: "top-center" });
+
       console.log(error);
     }
   };

@@ -1,13 +1,12 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { Course_Type, Single_User_Type, User_Type } from "@/utils/types";
+import { Course_Type } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
 import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Spinner from "@/components/commonUI/Spinner";
-import useFetchSingleCourse from "@/hooks/useFetchSingleCourse";
 interface DataInterface {
   PurchasedCourses: Course_Type[];
   courses: Course_Type[];
@@ -27,9 +26,7 @@ const Dashboard = ({ userID }: ParamsID) => {
     ["user", userID],
     async () => await axios.get(`/api/user/${userID}`)
   );
-  const { course } = useFetchSingleCourse("user", userID);
   const data: DataInterface = profileData?.data;
-  console.log(data, course);
 
   const purchasePrice = data?.PurchasedCourses?.map(
     (item: Course_Type) => item
@@ -54,8 +51,8 @@ const Dashboard = ({ userID }: ParamsID) => {
         <h2
           className={
             index === 0
-              ? "text-sm  font-medium cursor-pointer border-b-4 border-blue-400"
-              : "text-sm font-medium  cursor-pointer"
+              ? "text-xs whitespace-nowrap font-medium cursor-pointer border-b-4 border-blue-400"
+              : "text-xs whitespace-nowrap  font-medium  cursor-pointer"
           }
           onClick={() => setIndex(0)}
         >
@@ -64,8 +61,8 @@ const Dashboard = ({ userID }: ParamsID) => {
         <h2
           className={
             index === 1
-              ? "text-sm  font-medium cursor-pointer border-b-4 border-blue-400"
-              : "text-sm font-medium  cursor-pointer"
+              ? "text-xs whitespace-nowrap  font-medium cursor-pointer border-b-4 border-blue-400"
+              : "text-xs whitespace-nowrap font-medium  cursor-pointer"
           }
           onClick={() => setIndex(1)}
         >
@@ -74,15 +71,15 @@ const Dashboard = ({ userID }: ParamsID) => {
         <h2
           className={
             index === 2
-              ? "text-sm  font-medium cursor-pointer border-b-4 border-blue-400"
-              : "text-sm font-medium  cursor-pointer"
+              ? "text-xs whitespace-nowrap  font-medium cursor-pointer border-b-4 border-blue-400"
+              : "text-xs whitespace-nowrap font-medium  cursor-pointer"
           }
           onClick={() => setIndex(2)}
         >
           Sells
         </h2>
       </div>
-      <div className="mt-8 flex gap-5">
+      <div className="lg:mt-8 flex gap-5">
         <div
           className={
             index === 0
@@ -90,7 +87,7 @@ const Dashboard = ({ userID }: ParamsID) => {
               : "hidden"
           }
         >
-          {data?.PurchasedCourses?.map((item: Course_Type, i: Number) => (
+          {data?.PurchasedCourses?.map((item: Course_Type) => (
             <CourseCard key={item?._id} item={item} />
           ))}
         </div>
@@ -101,7 +98,7 @@ const Dashboard = ({ userID }: ParamsID) => {
               : "hidden"
           }
         >
-          {data?.courses?.map((item: Course_Type, i: Number) => (
+          {data?.courses?.map((item: Course_Type) => (
             <CourseCard key={item?._id} item={item} />
           ))}
         </div>
@@ -117,8 +114,8 @@ const Dashboard = ({ userID }: ParamsID) => {
           </p>
 
           <AreaChart
-            width={900}
-            height={500}
+            width={300}
+            height={400}
             data={purchasePrice}
             margin={{
               top: 5,

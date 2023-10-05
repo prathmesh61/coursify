@@ -1,11 +1,12 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Course_Type } from "@/utils/types";
+import { Course_Type, Single_User_Type } from "@/utils/types";
+import { toast } from "react-toastify";
 
-const useFetchSingleCourse = (type: string, id: string) => {
+const useFetchSingleItem = (type: string, id: string) => {
   const [loading, setLoading] = useState(true);
-  const [course, setCourse] = useState<Course_Type | any>();
+  const [course, setCourse] = useState<Course_Type | Single_User_Type>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,7 +16,9 @@ const useFetchSingleCourse = (type: string, id: string) => {
         setCourse(data);
         setLoading(false);
       } catch (error) {
-        alert("Error in fetching single data");
+        toast.error("Error in fetching single data", {
+          position: "top-center",
+        });
       }
     };
     fetchData();
@@ -24,4 +27,4 @@ const useFetchSingleCourse = (type: string, id: string) => {
   return { course, loading };
 };
 
-export default useFetchSingleCourse;
+export default useFetchSingleItem;
