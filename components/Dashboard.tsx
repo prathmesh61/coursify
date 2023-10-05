@@ -7,6 +7,7 @@ import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Spinner from "@/components/commonUI/Spinner";
+import useFetchSingleCourse from "@/hooks/useFetchSingleCourse";
 interface DataInterface {
   PurchasedCourses: Course_Type[];
   courses: Course_Type[];
@@ -26,7 +27,9 @@ const Dashboard = ({ userID }: ParamsID) => {
     ["user", userID],
     async () => await axios.get(`/api/user/${userID}`)
   );
+  const { course } = useFetchSingleCourse("user", userID);
   const data: DataInterface = profileData?.data;
+  console.log(data, course);
 
   const purchasePrice = data?.PurchasedCourses?.map(
     (item: Course_Type) => item

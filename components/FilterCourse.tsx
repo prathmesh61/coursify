@@ -3,15 +3,17 @@ import React, { useState } from "react";
 import Search from "./Search";
 import CourseCard from "./CourseCard";
 import { Course_Type, FilterCourseType } from "@/utils/types";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const FilterCourse = ({ data }: FilterCourseType) => {
   const [search, setSearch] = useState("");
+  const { dbounceValue } = useDebounce(search);
   const filterCourses = data?.filter((course: Course_Type) => {
     // if search is empty then list all courses
-    if (search === "") {
+    if (dbounceValue === "") {
       return data;
     }
-    return course.courseName.toLowerCase().includes(search.toLowerCase());
+    return course.courseName.toLowerCase().includes(dbounceValue.toLowerCase());
   });
 
   return (

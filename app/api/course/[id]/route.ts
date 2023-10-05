@@ -1,4 +1,3 @@
-ConnectionDB();
 import { Course } from "@/Model/Course";
 import { NextRequest, NextResponse } from "next/server";
 import { ConnectionDB } from "@/utils/ConnectionDB";
@@ -10,6 +9,7 @@ export const GET = async (
   res: NextResponse
 ) => {
   try {
+    await ConnectionDB();
     const course = await Course.findById({ _id: params.id }).populate(
       "autherID"
     );

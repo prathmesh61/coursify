@@ -8,20 +8,24 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   const { id } = params;
+  console.log(id);
 
   try {
     // find user by id
     await ConnectionDB();
-    const user = await User.findById(id).populate([
-      {
-        path: "courses",
-        model: Course,
-      },
-      {
-        path: "PurchasedCourses",
-        model: Course,
-      },
-    ]);
+    const user = await User.findOne({ _id: id })
+      .populate([
+        {
+          path: "courses",
+          model: Course,
+        },
+        {
+          path: "PurchasedCourses",
+          model: Course,
+        },
+      ])
+      .exec();
+    console.log(user);
 
     return NextResponse.json(user);
   } catch (error) {
