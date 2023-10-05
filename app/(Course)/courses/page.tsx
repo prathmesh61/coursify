@@ -1,5 +1,4 @@
 import { Category_Type } from "@/utils/types";
-// import Spinner from "@/components/Spinner";
 import FilterCourse from "@/components/FilterCourse";
 
 async function getData(Api_URI: string) {

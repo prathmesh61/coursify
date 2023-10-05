@@ -6,7 +6,7 @@ import CourseCard from "@/components/CourseCard";
 import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Spinner from "@/components/Spinner";
+import Spinner from "@/components/commonUI/Spinner";
 interface DataInterface {
   PurchasedCourses: Course_Type[];
   courses: Course_Type[];
@@ -18,13 +18,13 @@ interface DataInterface {
   _id: string;
 }
 interface ParamsID {
-  paramID: string;
+  userID: string;
 }
-const Dashboard = ({ paramID }: ParamsID) => {
+const Dashboard = ({ userID }: ParamsID) => {
   const [index, setIndex] = useState(0);
   const { data: profileData, isLoading } = useQuery(
-    ["user", paramID],
-    async () => await axios.get(`/api/user/${paramID}`)
+    ["user", userID],
+    async () => await axios.get(`/api/user/${userID}`)
   );
   const data: DataInterface = profileData?.data;
 

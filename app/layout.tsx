@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/base/Header";
 import "./globals.css";
 import type { Metadata } from "next";
 
@@ -13,17 +13,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  authModal,
 }: {
   children: React.ReactNode;
-  authModal: React.ReactNode;
 }) {
   return (
     <html lang="en">
       <body>
         <Providers>
           <Header />
-          {authModal}
           <ToastContainer
             autoClose={2000}
             position="top-center"

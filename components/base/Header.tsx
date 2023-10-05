@@ -2,12 +2,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import rightA from "@/public/right-arrow.svg";
-import Logout from "./Logout";
+import Logout from "../commonUI/Logout";
 import arrowDown from "@/public/arrow-down.svg";
 import { useState } from "react";
-import MobileNav from "./MobileNav";
+import MobileNav from "@/components/base/MobileNav";
 import { useSelector } from "react-redux";
-import cartImg from "@/public/cart.svg";
 const Header = () => {
   const { user, cart } = useSelector((state: any) => state.user);
 

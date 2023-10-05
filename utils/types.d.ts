@@ -127,3 +127,8 @@ export type Single_Course_Type = {
     };
   };
 };
+
+interface FooterLink {
+  name: string;
+  id: string;
+}

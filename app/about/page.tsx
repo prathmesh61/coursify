@@ -1,4 +1,3 @@
-import React from "react";
 import blurBg from "@/images/blurImg.svg";
 import Image from "next/image";
 

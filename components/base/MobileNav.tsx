@@ -40,6 +40,9 @@ const MobileNav = () => {
           className=" bg-blue-500 rounded-full"
         />
       </Link>
+      <Link href={`/contact`} className="font-semibold text-sm">
+        Contact
+      </Link>
       {user._id ? (
         <div
           onClick={handleClick}

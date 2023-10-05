@@ -2,7 +2,7 @@
 import { Course_Type, Single_Course_Type } from "@/utils/types";
 import Image from "next/image";
 import React from "react";
-import Spinner from "./Spinner";
+import Spinner from "./commonUI/Spinner";
 import { useDispatch } from "react-redux";
 import { removerFromCart } from "@/app/redux/features/userSlice";
 import { toast } from "react-toastify";

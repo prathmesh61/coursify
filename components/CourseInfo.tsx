@@ -1,9 +1,13 @@
-import { Course_Type } from "@/utils/types";
 import React from "react";
+import { Course_Type } from "@/utils/types";
+import Image from "next/image";
 import AddToCartBtn from "./AddToCartBtn";
 import arrowRight from "@/public/right-arrow.svg";
-import Image from "next/image";
-const CourseInfo = ({ course }: { course: Course_Type }) => {
+type Props = {
+  course: Course_Type;
+  courseId: string;
+};
+const CourseInfo = ({ course, courseId }: Props) => {
   const date = new Date(course?.createdAt);
 
   return (

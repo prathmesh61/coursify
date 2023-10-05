@@ -1,6 +1,6 @@
-import React from "react";
-
 const ContactPage = () => {
+  console.log("AboutPage");
+
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-40 lg:mt-48 px-14 gap-5 flex flex-col justify-center items-center">
       <div className="border border-richblack-600 text-richblack-300 rounded-xl p-7 lg:p-14 flex gap-3 flex-col">

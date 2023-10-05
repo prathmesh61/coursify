@@ -10,9 +10,8 @@ async function getData(Api_URI: string) {
   return res.json();
 }
 const CourseDetail = async ({ params }: { params: { id: string } }) => {
-  const course = await getData(
-    process.env.API_URL + `/api/course/${params.id}`
-  );
+  const { id } = params;
+  const course = await getData(process.env.API_URL + `/api/course/${id}`);
 
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">
@@ -23,12 +22,11 @@ const CourseDetail = async ({ params }: { params: { id: string } }) => {
         >
           Courses
         </Link>
-        {"  >  "}
         <p className="font-semibold sm:text-md text-xs   cursor-pointer hover:underline capitalize">
           {course?.courseName}
         </p>
       </div>
-      <CourseInfo course={course} />
+      <CourseInfo course={course} courseId={id} />
     </div>
   );
 };
