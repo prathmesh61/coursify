@@ -1,67 +1,22 @@
 "use client";
-import { useRouter } from "next/navigation";
-import axios from "axios";
-import React, { FormEvent, useState } from "react";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
 import Link from "next/link";
+import { useCourseForm } from "@/hooks/useCourseForm ";
 const NewCourse = () => {
-  const [courseName, setCourseName] = useState("");
-  const [description, setDescription] = useState("");
-  const [banner, setBanner] = useState("");
-  const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
-  const [loading, setLoading] = useState(true);
+  const {
+    banner,
+    category,
+    courseName,
+    description,
+    price,
+    setBanner,
+    setCategory,
+    setCourseName,
+    setDescription,
+    setPrice,
+    user,
+    handleFormSubmit,
+  } = useCourseForm();
 
-  const router = useRouter();
-  const { user } = useSelector((state: any) => state.user);
-
-  const CLOUDINARY_URL =
-    "https://api.cloudinary.com/v1_1/dpvjdarqx/image/upload";
-  const CLOUDINARY_UPLOAD_PRESET = "coursify";
-  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    // check if all fields are filled
-    if (!courseName || !description || !banner || !category || !price) {
-      toast.error("Please fill all the fields", {
-        position: "bottom-right",
-      });
-      return;
-    }
-
-    const file = banner;
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-    const { data } = await axios.post(CLOUDINARY_URL, formData);
-
-    try {
-      const course = await axios.post("/api/course", {
-        courseName,
-        description,
-        banner: data?.url || "",
-        category,
-        price,
-        id: user?._id,
-      });
-      if (course.status === 200) {
-        toast.success("Course Created Successfully", {
-          position: "bottom-right",
-        });
-
-        setCourseName("");
-        setDescription("");
-        setBanner("");
-        setCategory("");
-        setPrice("");
-        router.push("/courses");
-      }
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
   if (!user._id) {
     return (
       <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl h-screen mx-auto">
@@ -87,7 +42,7 @@ const NewCourse = () => {
       </h1>
       <form
         className="flex flex-col gap-4 md:w-[400px] w-[300px] mt-10"
-        onSubmit={handleFormSubmit}
+        onSubmit={(e) => handleFormSubmit(e)}
       >
         <div className="flex flex-col gap-2 w-full">
           <label htmlFor="courseName" className="font-semibold text-md">
@@ -125,7 +80,8 @@ const NewCourse = () => {
             name="banner"
             accept="image/*"
             className="w-full outline-none border-2 border-gray-400 rounded-lg p-2"
-            onChange={(e) => setBanner(e.target.files[0])}
+            // @ts-ignore
+            onChange={(e) => setBanner(e.target.files?.[0])}
             required
           />
         </div>

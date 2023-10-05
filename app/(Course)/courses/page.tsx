@@ -2,7 +2,7 @@ import { Category_Type } from "@/utils/types";
 import FilterCourse from "@/components/FilterCourse";
 
 async function getData(Api_URI: string) {
-  const res = await fetch(Api_URI);
+  const res = await fetch(Api_URI, { next: { revalidate: 20 } });
 
   if (!res.ok) {
     throw new Error("Failed to fetch data");
