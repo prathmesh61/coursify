@@ -13,6 +13,7 @@ const NewCourse = () => {
     setCourseName,
     setDescription,
     setPrice,
+    isCourseCreated,
     user,
     handleFormSubmit,
   } = useCourseForm();
@@ -116,8 +117,9 @@ const NewCourse = () => {
         <button
           type="submit"
           className="w-full py-1 px-4 text-center text-md font-semibold bg-blue-500 rounded-lg text-white"
+          disabled={isCourseCreated}
         >
-          Publish Course
+          {isCourseCreated ? "Loading.." : "Continue"}
         </button>
       </form>
     </div>

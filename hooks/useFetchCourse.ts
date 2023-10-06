@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Category_Type, Course_Type } from "@/utils/types";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export const useFetchCourse = () => {
   const [allCourses, setAllCourses] = useState<Course_Type | any>();
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -14,7 +17,14 @@ export const useFetchCourse = () => {
         setAllCourses(data);
         setLoading(false);
       } catch (error) {
-        alert("Error in fetching data");
+        console.log(error);
+
+        toast.error("Somthing Went Wrong.", {
+          position: "top-center",
+        });
+      }finally{
+        setLoading(false)
+        router.refresh()
       }
     };
     fetchData();

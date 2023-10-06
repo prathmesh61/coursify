@@ -11,6 +11,7 @@ export const useCourseForm = () => {
   const [banner, setBanner] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
+  const [isCourseCreated, setIsCourseCreated] = useState<boolean>(true);
 
   const router = useRouter();
   const { user } = useSelector((state: any) => state.user);
@@ -20,9 +21,10 @@ export const useCourseForm = () => {
   const CLOUDINARY_UPLOAD_PRESET = "coursify";
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsCourseCreated(true);
     // check if all fields are filled
     if (!courseName || !description || !banner || !category || !price) {
-      toast.error("Please fill all the fields", {
+      toast.error("fill all the fields", {
         position: "top-center",
       });
       return;
@@ -45,7 +47,7 @@ export const useCourseForm = () => {
         id: user?._id,
       });
       if (course.status === 200) {
-        toast.success("Course Created Successfully", {
+        toast.success("Successfull.", {
           position: "top-center",
         });
 
@@ -54,10 +56,18 @@ export const useCourseForm = () => {
         setBanner("");
         setCategory("");
         setPrice("");
+        setIsCourseCreated(false);
+
         router.push("/courses");
       }
     } catch (error: any) {
+      setIsCourseCreated(false);
       console.log(error);
+      toast.error("Try Again.", {
+        position: "top-center",
+      });
+    } finally {
+      setIsCourseCreated(false);
     }
   };
   return {
@@ -71,6 +81,7 @@ export const useCourseForm = () => {
     setDescription,
     setPrice,
     setCourseName,
+    isCourseCreated,
     handleFormSubmit,
     user,
   };

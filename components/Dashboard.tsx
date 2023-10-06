@@ -5,6 +5,7 @@ import { Course_Type } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
 import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import axios from "axios";
 import Spinner from "@/components/commonUI/Spinner";
 interface DataInterface {
@@ -80,17 +81,28 @@ const Dashboard = ({ userID }: ParamsID) => {
         </h2>
       </div>
       <div className="lg:mt-8 flex gap-5">
-        <div
-          className={
-            index === 0
-              ? "mt-20 flex justify-evenly items-center flex-wrap w-full"
-              : "hidden"
-          }
-        >
-          {data?.PurchasedCourses?.map((item: Course_Type) => (
-            <CourseCard key={item?._id} item={item} />
-          ))}
-        </div>
+        {data.PurchasedCourses.length === 0 && index === 0 ? (
+          <div className="h-full p-20 flex flex-col items-center justify-center">
+            <div className="relative h-72 w-72">
+              <Image src="/empty.png" fill alt="Empty" />
+            </div>
+            <p className="bg-blue-500 px-4 py-1 rounded-md text-white text-sm text-center">
+              No Purchase Courses!
+            </p>
+          </div>
+        ) : (
+          <div
+            className={
+              index === 0
+                ? "mt-20 flex justify-evenly items-center flex-wrap w-full"
+                : "hidden"
+            }
+          >
+            {data?.PurchasedCourses?.map((item: Course_Type) => (
+              <CourseCard key={item?._id} item={item} />
+            ))}
+          </div>
+        )}
         <div
           className={
             index === 1
