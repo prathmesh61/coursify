@@ -4,17 +4,17 @@ import { Category_Type, Course_Type } from "@/utils/types";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-export const useFetchCourse = () => {
-  const [allCourses, setAllCourses] = useState<Course_Type | any>();
+export const useFetch = (Url: string) => {
+  const [dataArray, setDataArray] = useState<Course_Type[] | any>();
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const router = useRouter();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/course");
+        const res = await fetch(Url, { next: { revalidate: 20 } });
         const data = await res.json();
-        setAllCourses(data);
+        setDataArray(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -22,33 +22,21 @@ export const useFetchCourse = () => {
         toast.error("Somthing Went Wrong.", {
           position: "top-center",
         });
-      }finally{
-        setLoading(false)
-        router.refresh()
+      } finally {
+        setLoading(false);
+        router.refresh();
       }
     };
     fetchData();
   }, []);
 
-  // search funcationality
-
-  // filter data through search and no search then list all courses
-  const filterData = allCourses?.filter((course: Course_Type) => {
-    // if search is empty then list all courses
-    if (search === "") {
-      return allCourses;
-    }
-    return course.courseName.toLowerCase().includes(search.toLowerCase());
-  });
-
   // unique categories set
   const uniqueCategories = [
-    ...new Set(allCourses?.map(({ category }: Category_Type) => category)),
-  ];
+    ...new Set(dataArray?.map(({ category }: Category_Type) => category)),
+  ] as Array<string>;
   return {
-    allCourses,
+    dataArray,
     loading,
-    filterData,
     search,
     setSearch,
     uniqueCategories,

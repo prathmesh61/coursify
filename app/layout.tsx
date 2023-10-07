@@ -25,7 +25,7 @@ export default function RootLayout({
             autoClose={2000}
             position="top-center"
             theme="light"
-            style={{ width: "300px" }}
+            style={{ width: "280px" }}
           />
           {children}
         </Providers>

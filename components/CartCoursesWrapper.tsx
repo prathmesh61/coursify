@@ -2,15 +2,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import CartCourse from "./CartCourse";
-import {
-  Course_Type,
-  Single_Course_Type,
-  StoreState_Type,
-} from "@/utils/types";
+import { Course_Type } from "@/utils/types";
 import PurchaseBtn from "./PurchaseBtn";
 
 const CartCoursesWrapper = () => {
-  const { cart, user } = useSelector((state: any) => state.user);
+  const { cart } = useSelector((state: any) => state.user);
   // cart total reduce method
   const total = cart.reduce(
     (acc: number, curr: Course_Type) => acc + curr.price,
@@ -19,7 +15,7 @@ const CartCoursesWrapper = () => {
   return (
     <>
       <div className="flex flex-col items-start justify-between w-full gap-4">
-        {cart?.map((course: Single_Course_Type, index: number) => (
+        {cart?.map((course: Course_Type, index: number) => (
           <CartCourse course={course} key={index} />
         ))}
       </div>

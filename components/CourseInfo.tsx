@@ -7,7 +7,7 @@ type Props = {
   course: Course_Type;
   courseId: string;
 };
-const CourseInfo = ({ course, courseId }: Props) => {
+const CourseInfo = ({ course }: Props) => {
   const date = new Date(course?.createdAt);
 
   return (

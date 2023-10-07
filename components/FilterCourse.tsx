@@ -1,31 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Search from "./Search";
 import CourseCard from "./CourseCard";
 import { Course_Type } from "@/utils/types";
 import { useDebounce } from "@/hooks/useDebounce";
 import CourseCategory from "./CourseCategory";
+import { useFetch } from "@/hooks/useFetch";
+import Spinner from "./commonUI/Spinner";
 
 const FilterCourse = ({
   searchParams,
-  data,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
-  data: Course_Type[];
 }) => {
-  const [search, setSearch] = useState("");
+  // custom hook usefetch Fetch All Courses
+  const { dataArray, loading, search, setSearch, uniqueCategories } =
+    useFetch("/api/course");
+
+  // custom hook useDebounce For api delay
   const { dbounceValue } = useDebounce(search);
   const searchParamCategory = searchParams["category"];
-  const filterCourses = data?.filter((course: Course_Type) => {
-    // if search is empty then list all courses
+
+  const filterCourses = dataArray?.filter((course: Course_Type) => {
     if (dbounceValue) {
+      // filter by search
       return course.courseName
         .toLowerCase()
         .includes(dbounceValue.toLowerCase());
     } else if (searchParamCategory) {
+      // if URL has category Query then fetch byCategory
       return course.category === searchParamCategory;
     }
-    return data;
+    // if search is empty then list all courses
+    return dataArray;
   });
 
   return (
@@ -34,13 +41,21 @@ const FilterCourse = ({
         <Search search={search} setSearch={setSearch} />
       </div>
       <div className="flex w-full">
-        <CourseCategory data={data} />
+        <CourseCategory uniqueCategories={uniqueCategories} />
       </div>
 
       <div className="mt-20 flex justify-evenly items-center flex-wrap w-full ">
-        {filterCourses?.map((item: Course_Type) => (
-          <CourseCard key={item?._id} item={item} />
-        ))}
+        {loading ? (
+          <>
+            <Spinner />
+          </>
+        ) : (
+          <>
+            {filterCourses?.map((item: Course_Type) => (
+              <CourseCard key={item?._id} item={item} />
+            ))}
+          </>
+        )}
       </div>
     </>
   );

@@ -6,7 +6,10 @@ import Spinner from "./commonUI/Spinner";
 import { useDispatch } from "react-redux";
 import { removerFromCart } from "@/app/redux/features/userSlice";
 import { toast } from "react-toastify";
-const CartCourse = ({ course }) => {
+type Props = {
+  course: Course_Type;
+};
+const CartCourse = ({ course }: Props) => {
   // removeFromCart
   const dispatch = useDispatch();
   const removeToCart = async (course: Course_Type) => {

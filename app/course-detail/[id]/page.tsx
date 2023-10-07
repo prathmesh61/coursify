@@ -18,11 +18,11 @@ const CourseDetail = async ({ params }: { params: { id: string } }) => {
       <div className="flex items-center gap-2">
         <Link
           href={"/courses"}
-          className="font-semibold sm:text-md text-xs    cursor-pointer hover:underline capitalize"
+          className="font-semibold sm:text-md text-xs cursor-pointer hover:underline capitalize"
         >
           Courses
         </Link>
-        <p className="font-semibold sm:text-md text-xs   cursor-pointer hover:underline capitalize">
+        <p className="font-semibold sm:text-md text-xs cursor-pointer hover:underline capitalize">
           {course?.courseName}
         </p>
       </div>
