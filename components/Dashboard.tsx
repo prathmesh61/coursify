@@ -1,23 +1,14 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { Course_Type } from "@/utils/types";
+import { Course_Type, DataInterface } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
 import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import axios from "axios";
 import Spinner from "@/components/commonUI/Spinner";
-interface DataInterface {
-  PurchasedCourses: Course_Type[];
-  courses: Course_Type[];
-  username: string;
-  email: string;
-  id: string;
-  isSeller: boolean;
-  _v: number;
-  _id: string;
-}
+
 interface ParamsID {
   userID: string;
 }
@@ -81,7 +72,7 @@ const Dashboard = ({ userID }: ParamsID) => {
         </h2>
       </div>
       <div className="lg:mt-8 flex gap-5">
-        {data.PurchasedCourses.length === 0 && index === 0 ? (
+        {data?.PurchasedCourses.length === 0 && index === 0 ? (
           <div className="h-full p-20 flex flex-col items-center justify-center">
             <div className="relative h-72 w-72">
               <Image src="/empty.png" fill alt="Empty" />

@@ -70,8 +70,8 @@ export type Course_Card_Type = {
 
 export type User_Type = {
   user: {
-    purchasedCourses: string[];
-    courses: string[];
+    purchasedCourses: Course_Type[];
+    courses: Course_Type[];
     email: string;
     isSeller: boolean;
     username: string;
@@ -80,11 +80,12 @@ export type User_Type = {
   };
 };
 export type Single_User_Type = {
-  purchasedCourses: string[];
-  courses: string[];
+  PurchasedCourses: Course_Type[];
+  courses: Course_Type[];
   email: string;
   isSeller: boolean;
   username: string;
+  password?: string;
   __v: number;
   _id: string;
 };
@@ -131,4 +132,28 @@ export type Single_Course_Type = {
 interface FooterLink {
   name: string;
   id: string;
+}
+interface DataInterface {
+  PurchasedCourses: Course_Type[];
+  courses: Course_Type[];
+  username: string;
+  email: string;
+  id: string;
+  isSeller: boolean;
+  _v: number;
+  _id: string;
+}
+
+interface course_item {
+  description: string;
+  quantity: number;
+  courseName: string;
+  banner: string;
+  category: string;
+  price: string | number;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  autherID: string;
+  __v: number;
+  _id: string;
 }
