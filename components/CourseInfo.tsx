@@ -59,9 +59,9 @@ const CourseInfo = ({ course }: Props) => {
           </ol>
         </div>
       </div>
-      <div className="w-full lg:w-[48%]  flex flex-col gap-4">
+      <div className="w-full lg:w-[48%] flex flex-col gap-4">
         <img
-          className=" w-full object-contain "
+          className=" w-full object-contain bg-zinc-300"
           src={course?.banner}
           alt={course?.courseName}
         />

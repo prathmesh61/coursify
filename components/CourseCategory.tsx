@@ -1,16 +1,16 @@
-import { Category_Type, Course_Type } from "@/utils/types";
+import { Course_Type } from "@/utils/types";
 import Link from "next/link";
 import React from "react";
 
 type Props = {
-  uniqueCategories: Array<string>;
+  data: Course_Type[];
 };
 
-function CourseCategory({ uniqueCategories }: Props) {
-  // const filterCategory = data.map((item: Course_Type) => item.category);
-  // const mainArrayCategory = filterCategory.filter(
-  //   (val, ind) => filterCategory.indexOf(val) === ind
-  // );
+function CourseCategory({ data }: Props) {
+  const filterCategory = data.map((item: Course_Type) => item.category);
+  const mainArrayCategory = filterCategory.filter(
+    (val, ind) => filterCategory.indexOf(val) === ind
+  );
 
   return (
     <div className="flex whitespace-nowrap flex-wrap justify-center lg:justify-start items-center gap-2">
@@ -21,7 +21,7 @@ function CourseCategory({ uniqueCategories }: Props) {
         No Filter
       </Link>
       <div className="flex items-start whitespace-nowrap gap-4">
-        {uniqueCategories.map((cat: string) => (
+        {mainArrayCategory.map((cat: string) => (
           <Link
             href={`?category=${cat}`}
             className="text-sm md:text-md active:border-none bg-blue-400 text-white px-2 rounded-md"

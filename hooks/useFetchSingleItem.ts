@@ -5,17 +5,17 @@ import { Course_Type, Single_User_Type } from "@/utils/types";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
-const useFetchSingleItem = (type: string, id: string) => {
+const useFetchSingleItem = (Url: string) => {
   const [loading, setLoading] = useState(true);
-  const [course, setCourse] = useState<Course_Type | Single_User_Type>();
+  const [item, setItem] = useState<Course_Type | Single_User_Type>();
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`/api/${type}/${id}`);
+        const res = await axios.get(Url);
         const data = await res.data;
-        setCourse(data);
+        setItem(data);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -28,9 +28,9 @@ const useFetchSingleItem = (type: string, id: string) => {
       }
     };
     fetchData();
-  }, [id]);
+  }, [Url]);
 
-  return { course, loading };
+  return { item, loading };
 };
 
 export default useFetchSingleItem;
