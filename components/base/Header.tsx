@@ -20,9 +20,13 @@ const Header = () => {
           </h1>
         </Link>
         <div className="hidden md:flex items-center justify-center gap-8">
-          {user?.isSeller && (
+          {user?.isSeller ? (
             <Link href="/new-course" className="font-semibold text-sm">
               Create Course
+            </Link>
+          ) : (
+            <Link href="/contact" className="font-semibold text-sm">
+              Want to become teacher?
             </Link>
           )}
           <Link

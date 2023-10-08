@@ -18,7 +18,7 @@ const Hero = () => {
           href="/courses"
           className="text-white bg-blue-500 px-5 py-1 inline-block cursor-pointer rounded-md text-lg lg:text-left text-center w-fit"
         >
-          Browes our courses
+          browes our courses
         </Link>
       </div>
       <div className="flex ">
