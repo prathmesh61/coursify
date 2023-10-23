@@ -3,7 +3,14 @@ import React from "react";
 import { useState } from "react";
 import { Course_Type, DataInterface } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
-import { AreaChart, Area, YAxis, CartesianGrid, Tooltip } from "recharts";
+import {
+  AreaChart,
+  Area,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import axios from "axios";
@@ -115,28 +122,31 @@ const Dashboard = ({ userID }: ParamsID) => {
           <p className="text-xl font-bold">
             {total > 0 ? `Total Sells:- ₹${total}` : "No sells"}
           </p>
-
-          <AreaChart
-            width={300}
-            height={400}
-            data={purchasePrice}
-            margin={{
-              top: 5,
-              right: 0,
-              left: 0,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <YAxis />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="price"
-              stroke="#8884d8"
-              fill="#3A72ED"
-            />
-          </AreaChart>
+          <div className="w-[300px] h-[400px] relative border-2 border-zinc-300 rounded-lg p-2">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart
+                // width={300}
+                // height={400}
+                data={purchasePrice}
+                margin={{
+                  top: 5,
+                  right: 0,
+                  left: 0,
+                  bottom: 5,
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" />
+                <YAxis />
+                <Tooltip />
+                <Area
+                  type="monotone"
+                  dataKey="price"
+                  stroke="#8884d8"
+                  fill="#3A72ED"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
         </div>
       </div>
     </>
