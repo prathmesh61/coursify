@@ -9,10 +9,10 @@ export const GET = async (
 ) => {
   const { id } = params;
   console.log(id);
+  ConnectionDB();
 
   try {
     // find user by id
-    await ConnectionDB();
     const user = await User.findById({ _id: id })
       .populate([
         {
@@ -25,6 +25,7 @@ export const GET = async (
         },
       ])
       .exec();
+
     console.log(user);
 
     return NextResponse.json(user);

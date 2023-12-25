@@ -4,6 +4,7 @@ type ParamsType = {
     id: string;
   };
 };
+
 const Profile = ({ params }: ParamsType) => {
   const { id } = params;
 

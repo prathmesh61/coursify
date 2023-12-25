@@ -3,22 +3,18 @@ import React from "react";
 import { useState } from "react";
 import { Course_Type, DataInterface } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
-import {
-  AreaChart,
-  Area,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
+
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import axios from "axios";
 import Spinner from "@/components/commonUI/Spinner";
+import Chart from "./commonUI/Chart";
+import { log } from "util";
 
 interface ParamsID {
   userID: string;
 }
+
 const Dashboard = ({ userID }: ParamsID) => {
   const [index, setIndex] = useState(0);
   const { data: profileData, isLoading } = useQuery(
@@ -34,6 +30,7 @@ const Dashboard = ({ userID }: ParamsID) => {
     (acc: number, curr: Course_Type) => acc + curr.price,
     0
   );
+
   if (isLoading) {
     return (
       <>
@@ -112,42 +109,8 @@ const Dashboard = ({ userID }: ParamsID) => {
             <CourseCard key={item?._id} item={item} />
           ))}
         </div>
-        <div
-          className={
-            index === 2
-              ? "mt-20 w-full h-full flex flex-col gap-5 justify-center items-center"
-              : "hidden"
-          }
-        >
-          <p className="text-xl font-bold">
-            {total > 0 ? `Total Sells:- ₹${total}` : "No sells"}
-          </p>
-          <div className="w-[300px] h-[400px] relative border-2 border-zinc-300 rounded-lg p-2">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                // width={300}
-                // height={400}
-                data={purchasePrice}
-                margin={{
-                  top: 5,
-                  right: 0,
-                  left: 0,
-                  bottom: 5,
-                }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <YAxis />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="price"
-                  stroke="#8884d8"
-                  fill="#3A72ED"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+
+        <Chart index={index} purchasePrice={purchasePrice} total={total} />
       </div>
     </>
   );
