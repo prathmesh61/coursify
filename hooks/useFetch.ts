@@ -31,14 +31,13 @@ export const useFetch = (Url: string) => {
   }, []);
 
   // unique categories set
-  const uniqueCategories = [
-    ...new Set(dataArray?.map(({ category }: Category_Type) => category)),
-  ] as Array<string>;
+  // const uniqueCategories = [
+  //   ...new Set(dataArray?.map(({ category }: Category_Type) => category)),
+  // ] as Array<string>;
   return {
     dataArray,
     loading,
     search,
     setSearch,
-    uniqueCategories,
   };
 };

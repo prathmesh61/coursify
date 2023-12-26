@@ -1,5 +1,5 @@
 "use client";
-import { Course_Type, Single_Course_Type } from "@/utils/types";
+import { Course_Type } from "@/utils/types";
 import Image from "next/image";
 import React from "react";
 import Spinner from "./commonUI/Spinner";

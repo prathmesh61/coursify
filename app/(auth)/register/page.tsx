@@ -1,5 +1,4 @@
 "use client";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Link from "next/link";
 import React, { FormEvent, useState } from "react";
@@ -31,8 +30,6 @@ const RegitserPage = () => {
       console.log(error);
     }
   };
-
-  // console.log(data);
 
   return (
     <div className="flex flex-col justify-center items-center  px-14 py-4 max-w-screen-2xl mx-auto h-screen">
