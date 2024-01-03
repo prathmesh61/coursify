@@ -60,7 +60,7 @@ const LoginPage = () => {
           <input
             type="password"
             name="courseName"
-            placeholder="********"
+            placeholder="Password"
             className="w-full outline-none border-2 border-gray-400 rounded-lg p-2"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
