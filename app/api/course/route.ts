@@ -10,7 +10,10 @@ type courseTypeProps = {
   category: String;
   price: Number;
 };
+import NodeCache from "node-cache";
 
+// node-cache init
+const nodeCache = new NodeCache();
 export const POST = async (req: NextRequest, res: NextResponse) => {
   const { courseName, description, banner, category, price, id } =
     await req.json();
@@ -36,8 +39,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 };
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
+  let courses;
   try {
-    const courses = await Course.find({}).populate("autherID");
+    if (nodeCache.has("allCourses")) {
+      courses = nodeCache.get("allCourses");
+    } else {
+      courses = await Course.find({}).populate("autherID");
+      nodeCache.set("allCourses", courses);
+    }
     return NextResponse.json(courses, { status: 200 });
   } catch (error: any) {
     throw new Error(error);
