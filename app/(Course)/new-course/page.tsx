@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useCourseForm } from "@/hooks/useCourseForm ";
+
 const NewCourse = () => {
   const {
     banner,
@@ -36,6 +37,7 @@ const NewCourse = () => {
       </div>
     );
   }
+
   return (
     <div className="flex flex-col justify-center items-center mt-32 lg:mt-40 px-14 py-4 max-w-screen-2xl mx-auto">
       <h1 className="font-mono text-2xl md:text-3xl text-center">
@@ -116,10 +118,10 @@ const NewCourse = () => {
         </div>
         <button
           type="submit"
-          className="w-full py-1 px-4 text-center text-md font-semibold bg-blue-500 rounded-lg text-white"
+          className="w-full py-1 px-4 text-center text-md font-semibold bg-blue-500 rounded-lg text-white cursor-pointer"
           disabled={isCourseCreated}
         >
-          {isCourseCreated ? "Loading.." : "Continue"}
+          {isCourseCreated ? "Loading" : "Continue"}
         </button>
       </form>
     </div>

@@ -1,18 +1,18 @@
+"use client";
 import Link from "next/link";
 import CourseInfo from "@/components/CourseInfo";
-async function getData(Api_URI: string) {
-  const res = await fetch(Api_URI);
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+import useFetchSingleItem from "@/hooks/useFetchSingleItem";
+import Spinner from "@/components/commonUI/Spinner";
 
-  return res.json();
-}
-const CourseDetail = async ({ params }: { params: { id: string } }) => {
+const CourseDetail = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const course = await getData(process.env.API_URL + `/api/course/${id}`);
+  const { item: course, loading } = useFetchSingleItem(`/api/course/${id}`);
 
+  if (loading) {
+    return <Spinner />;
+  }
+  if (!course) return;
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">
       <div className="flex items-center gap-2">

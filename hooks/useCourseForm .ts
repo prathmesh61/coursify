@@ -11,7 +11,7 @@ export const useCourseForm = () => {
   const [banner, setBanner] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
-  const [isCourseCreated, setIsCourseCreated] = useState<boolean>(true);
+  const [isCourseCreated, setIsCourseCreated] = useState<boolean>(false);
 
   const router = useRouter();
   const { user } = useSelector((state: any) => state.user);
@@ -56,12 +56,10 @@ export const useCourseForm = () => {
         setBanner("");
         setCategory("");
         setPrice("");
-        setIsCourseCreated(false);
 
         router.push("/courses");
       }
     } catch (error: any) {
-      setIsCourseCreated(false);
       console.log(error);
       toast.error("Try Again.", {
         position: "top-center",

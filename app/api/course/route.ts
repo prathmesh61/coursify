@@ -1,4 +1,3 @@
-ConnectionDB();
 import { Course } from "@/Model/Course";
 import { User } from "@/Model/User";
 import { ConnectionDB } from "@/utils/ConnectionDB";
@@ -18,6 +17,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   const { courseName, description, banner, category, price, id } =
     await req.json();
   try {
+    ConnectionDB();
+
     const newCourse = await Course.create({
       courseName,
       description,
@@ -27,11 +28,12 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       autherID: id,
     });
     // push this newcourse to the user's course array
-    const user = await User.findOneAndUpdate(
+    await User.findOneAndUpdate(
       { _id: id },
       { $push: { courses: newCourse._id } },
       { new: true }
     );
+
     return NextResponse.json(newCourse, { status: 200 });
   } catch (error: any) {
     throw new Error(error);
@@ -39,14 +41,10 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 };
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
-  let courses;
+  ConnectionDB();
+
   try {
-    if (nodeCache.has("allCourses")) {
-      courses = nodeCache.get("allCourses");
-    } else {
-      courses = await Course.find({}).populate("autherID");
-      nodeCache.set("allCourses", courses);
-    }
+    const courses = await Course.find({}).populate("autherID");
     return NextResponse.json(courses, { status: 200 });
   } catch (error: any) {
     throw new Error(error);
@@ -60,6 +58,8 @@ export const PATCH = async (
 ) => {
   const id = params.id;
   try {
+    ConnectionDB();
+
     // push this PurchasedCourse to the user's PurchasedCourses array
     const Updateduser = await User.findOneAndUpdate(
       { _id: id },

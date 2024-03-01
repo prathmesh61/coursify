@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 
 const useFetchSingleItem = (Url: string) => {
   const [loading, setLoading] = useState(true);
-  const [item, setItem] = useState<Course_Type | Single_User_Type>();
+  const [item, setItem] = useState<Course_Type | null>();
   const router = useRouter();
 
   useEffect(() => {
@@ -24,7 +24,6 @@ const useFetchSingleItem = (Url: string) => {
         });
       } finally {
         setLoading(false);
-        router.refresh();
       }
     };
     fetchData();
