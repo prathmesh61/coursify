@@ -21,6 +21,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.1",
     "next": "13.4.12",
+    "node-cache": "^5.1.2",
     "postcss": "8.4.27",
     "razorpay": "^2.9.2",
     "react": "18.2.0",
@@ -38,7 +39,6 @@
     "@playwright/test": "^1.42.0",
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
-    "@types/shortid": "^0.0.29",
-    "node-cache": "^5.1.2"
+    "@types/shortid": "^0.0.29"
   }
 }

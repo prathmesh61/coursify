@@ -11,29 +11,23 @@ export const GET = async (
   { params }: { params: { id: string } }
 ) => {
   const { id } = params;
-  console.log(id);
   ConnectionDB();
-  let user;
+
   try {
     // find user by id and get all info about course
-    if (nodeCache.has("user")) {
-      user = nodeCache.get("user");
-    } else {
-      user = await User.findById({ _id: id })
-        .populate([
-          {
-            path: "courses",
-            model: Course,
-          },
-          {
-            path: "PurchasedCourses",
-            model: Course,
-          },
-        ])
-        .exec();
-      nodeCache.set("user", user);
-    }
 
+    const user = await User.findById({ _id: id })
+      .populate([
+        {
+          path: "courses",
+          model: Course,
+        },
+        {
+          path: "PurchasedCourses",
+          model: Course,
+        },
+      ])
+      .exec();
     return NextResponse.json(user);
   } catch (error) {
     const errorResponse = {

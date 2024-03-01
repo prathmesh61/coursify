@@ -33,8 +33,6 @@ const Dashboard: React.FC<ParamsID> = ({ userID }) => {
     fetchUserProfile();
   }, []);
 
-  console.log(user);
-
   // purchasePrice for checking user purchase course or not
   const purchasePrice = user?.PurchasedCourses?.map(
     (item: Course_Type) => item
