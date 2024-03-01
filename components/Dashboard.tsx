@@ -1,20 +1,39 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
-import { Course_Type } from "@/utils/types";
+import { Course_Type, DataInterface } from "@/utils/types";
 import CourseCard from "@/components/CourseCard";
 
 import Spinner from "@/components/commonUI/Spinner";
 import Chart from "./commonUI/Chart";
-import { useFetch } from "@/hooks/useFetch";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
-interface ParamsID {
+type ParamsID = {
   userID: string;
-}
+};
 
-const Dashboard = ({ userID }: ParamsID) => {
+const Dashboard: React.FC<ParamsID> = ({ userID }) => {
   const [index, setIndex] = useState(0);
-  const { dataArray: user, loading } = useFetch(`/api/user/${userID}`);
+  const [user, setUser] = useState<DataInterface | null>();
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      setLoading(true);
+      try {
+        const { data } = await axios.get(`/api/user/${userID}`);
+        setUser(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchUserProfile();
+  }, []);
+
+  console.log(user);
 
   // purchasePrice for checking user purchase course or not
   const purchasePrice = user?.PurchasedCourses?.map(
@@ -33,6 +52,7 @@ const Dashboard = ({ userID }: ParamsID) => {
       </>
     );
   }
+
   return (
     <>
       <h1 className="font-extrabold sm:text-3xl text-2xl italic font-mono">
@@ -72,7 +92,7 @@ const Dashboard = ({ userID }: ParamsID) => {
       </div>
       <div className="lg:mt-8 flex gap-5">
         {user?.PurchasedCourses.length === 0 && index === 0 ? (
-          <div className="h-full p-20 flex flex-col items-center justify-center">
+          <div className="h-full p-20 flex flex-col items-center justify-center w-full">
             <p className="bg-blue-500 px-4 py-1 rounded-md text-white text-base text-center">
               No Purchase Courses!
             </p>
@@ -102,7 +122,9 @@ const Dashboard = ({ userID }: ParamsID) => {
           ))}
         </div>
 
-        <Chart index={index} purchasePrice={purchasePrice} total={total} />
+        {total && (
+          <Chart index={index} purchasePrice={purchasePrice} total={total} />
+        )}
       </div>
     </>
   );

@@ -12,7 +12,6 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
   if (loading) {
     return <Spinner />;
   }
-  if (!course) return;
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-20 px-4 gap-5 flex flex-col items-start">
       <div className="flex items-center gap-2">
@@ -26,7 +25,7 @@ const CourseDetail = ({ params }: { params: { id: string } }) => {
           {course?.courseName}
         </p>
       </div>
-      <CourseInfo course={course} courseId={id} />
+      {course && <CourseInfo course={course} courseId={id} />}
     </div>
   );
 };

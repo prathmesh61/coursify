@@ -133,7 +133,7 @@ interface FooterLink {
   name: string;
   id: string;
 }
-interface DataInterface {
+export interface DataInterface {
   PurchasedCourses: Course_Type[];
   courses: Course_Type[];
   username: string;

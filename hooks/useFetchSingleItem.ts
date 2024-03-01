@@ -16,7 +16,6 @@ const useFetchSingleItem = (Url: string) => {
         const res = await axios.get(Url);
         const data = await res.data;
         setItem(data);
-        setLoading(false);
       } catch (error) {
         console.log(error);
         toast.error("Somthing Went Wrong.", {

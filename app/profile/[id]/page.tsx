@@ -6,7 +6,8 @@ type ParamsType = {
 };
 
 const Profile = ({ params }: ParamsType) => {
-  const { id } = params;
+  const id = params.id;
+  console.log(id);
 
   return (
     <div className="relative max-w-screen-2xl mx-auto mt-24  px-14 gap-5 flex flex-col  ">

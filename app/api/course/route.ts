@@ -27,6 +27,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
       price,
       autherID: id,
     });
+    nodeCache.del("user");
     // push this newcourse to the user's course array
     await User.findOneAndUpdate(
       { _id: id },
